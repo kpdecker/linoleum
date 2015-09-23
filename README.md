@@ -19,6 +19,18 @@ require('linoleum/tasks/babel');
 require('linoleum/tasks/test');
 ```
 
+### linoleum/tasks/clean
+
+Defines the `clean` task which will remove all build and coverage output from the project.
+
+### linoleum/tasks/lint
+
+Defines the `lint` task which will lint all source and test files.
+
+### linoleum/tasks/babel
+
+Defines the `babel` task which builds all source content to their ES5 equivalent.
+
 ### linoleum/tasks/test
 
 Defines the `test:mocha` task which runs in-process Node tests.
