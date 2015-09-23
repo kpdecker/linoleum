@@ -4,7 +4,7 @@
   "description": "Recall javascript build infrastructure",
   "main": "index.js",
   "scripts": {
-    "test": "gulp clean lint"
+    "test": "gulp clean && gulp lint babel"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "del": "^2.0.2",
     "eslint-config-recall": "projectrecall/eslint-config-recall",
     "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "gulp-eslint": "^1.0.0",
     "gulp-plumber": "^1.0.1",
     "source-map-support": "kpdecker/node-source-map-support"

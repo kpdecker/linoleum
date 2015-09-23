@@ -3,10 +3,14 @@ module.exports.WATCHING = false;
 
 module.exports.SOURCE_FILES = ['src/**/*.{js,jsx}'];
 module.exports.TEST_FILES = ['test/**/*.js'];
+module.exports.BUILD_TARGET = 'lib/';
+
+// Hack around es6 module definitions without bootstrapping the transpiler
+module.exports.__esModule = true;
 
 Error.stackTraceLimit = Infinity;   // And beyond
 
-require('babel/register');
+require('babel/register')(require('./babel-defaults'));
 
 // Must be after babel so our fork overrides the one installed by babel.
 // Aren't unresponsive OSS projects fun!.
