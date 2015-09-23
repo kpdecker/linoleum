@@ -20,3 +20,5 @@ require('source-map-support').install({
   handleUncaughtExceptions: false,
   hookRequire: true
 });
+
+module.exports.watch = require('./src/watch');

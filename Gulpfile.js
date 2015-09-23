@@ -1,7 +1,8 @@
 var Gulp = require('gulp'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
 
-require('./index');
+    Linoleum = require('./index');
+
 require('./tasks/clean');
 require('./tasks/lint');
 require('./tasks/babel');
@@ -18,9 +19,11 @@ Gulp.task('cover', ['build'], function(done) {
   runSequence('cover:mocha', done);
 });
 
+Linoleum.watch(Linoleum.SOURCE_FILES.concat(Linoleum.TEST_FILES), 'cover');
 
 Gulp.task('travis', function(done) {
   // These need to be run in series to prevent issues with error tracking
   runSequence('cover', 'test', done);
 });
 Gulp.task('default', ['cover']);
+
