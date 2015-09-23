@@ -22,7 +22,7 @@
     "del": "^2.0.2",
     "eslint-config-recall": "projectrecall/eslint-config-recall",
     "gulp": "^3.9.0",
-    "source-map-lookup": "kpdecker/source-map-lookup"
+    "source-map-support": "kpdecker/node-source-map-support"
   },
   "eslintConfig": {
     "extends": [
