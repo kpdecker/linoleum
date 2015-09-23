@@ -16,5 +16,14 @@
     "url": "https://github.com/projectrecall/linoleum/issues"
   },
   "homepage": "https://github.com/projectrecall/linoleum#readme",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "eslint-config-recall": "projectrecall/eslint-config-recall"
+  },
+  "eslintConfig": {
+    "extends": [
+      "recall"
+    ],
+    "root": true
+  }
 }
