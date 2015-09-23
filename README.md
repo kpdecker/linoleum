@@ -11,4 +11,7 @@ Within `Gulpfile.js`:
 ```
 // Init global state
 require('linoleum');
+
+// Include optional linoleum tasks
+require('linoleum/tasks/clean');
 ```
