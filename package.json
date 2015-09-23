@@ -22,6 +22,7 @@
     "del": "^2.0.2",
     "eslint-config-recall": "projectrecall/eslint-config-recall",
     "gulp": "^3.9.0",
+    "gulp-plumber": "^1.0.1",
     "source-map-support": "kpdecker/node-source-map-support"
   },
   "eslintConfig": {
