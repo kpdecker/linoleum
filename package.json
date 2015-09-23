@@ -1,0 +1,20 @@
+{
+  "name": "linoleum",
+  "version": "0.0.0",
+  "description": "Recall javascript build infrastructure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/projectrecall/linoleum.git"
+  },
+  "author": "Kevin Decker <kpdecker@gmail.com> (http://incaseofstairs.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/projectrecall/linoleum/issues"
+  },
+  "homepage": "https://github.com/projectrecall/linoleum#readme",
+  "private": true
+}
