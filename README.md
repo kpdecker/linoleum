@@ -16,4 +16,9 @@ require('linoleum');
 require('linoleum/tasks/clean');
 require('linoleum/tasks/lint');
 require('linoleum/tasks/babel');
+require('linoleum/tasks/test');
 ```
+
+### linoleum/tasks/test
+
+Defines the `test:mocha` task which runs in-process Node tests.

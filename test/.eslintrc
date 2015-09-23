@@ -1,0 +1,5 @@
+{
+  extends: [
+    "recall/test"
+  ]
+}

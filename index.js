@@ -2,7 +2,7 @@
 module.exports.WATCHING = false;
 
 module.exports.SOURCE_FILES = ['src/**/*.{js,jsx}'];
-module.exports.TEST_FILES = ['test/**/*.js'];
+module.exports.TEST_FILES = [__dirname + '/src/sandbox.js', 'test/**/*.js'];    // eslint-disable-line prefer-template
 module.exports.BUILD_TARGET = 'lib/';
 
 // Hack around es6 module definitions without bootstrapping the transpiler
