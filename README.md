@@ -17,6 +17,7 @@ require('linoleum/tasks/clean');
 require('linoleum/tasks/lint');
 require('linoleum/tasks/babel');
 require('linoleum/tasks/test');
+require('linoleum/tasks/cover');
 ```
 
 Global APIs:
