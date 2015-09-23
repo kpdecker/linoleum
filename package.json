@@ -18,7 +18,9 @@
   "homepage": "https://github.com/projectrecall/linoleum#readme",
   "private": true,
   "dependencies": {
-    "eslint-config-recall": "projectrecall/eslint-config-recall"
+    "babel": "^5.8.23",
+    "eslint-config-recall": "projectrecall/eslint-config-recall",
+    "source-map-lookup": "kpdecker/source-map-lookup"
   },
   "eslintConfig": {
     "extends": [
