@@ -34,3 +34,7 @@ Defines the `babel` task which builds all source content to their ES5 equivalent
 ### linoleum/tasks/test
 
 Defines the `test:mocha` task which runs in-process Node tests.
+
+### linoleum/tasks/cover
+
+Defines the `cover:mocha` task which runs in-process Node coverage tests.
