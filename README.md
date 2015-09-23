@@ -14,4 +14,5 @@ require('linoleum');
 
 // Include optional linoleum tasks
 require('linoleum/tasks/clean');
+require('linoleum/tasks/lint');
 ```
