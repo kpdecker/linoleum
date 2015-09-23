@@ -39,7 +39,8 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
-    "sinon": "^1.17.0"
+    "sinon": "^1.17.0",
+    "through2": "^2.0.0"
   },
   "eslintConfig": {
     "extends": [
