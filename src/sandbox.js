@@ -19,3 +19,6 @@ afterEach(function() {
   this.sandbox.restore();
 });
 
+process.on('unhandledRejection', (err) => {
+  throw err;
+});
