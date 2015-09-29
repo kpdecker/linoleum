@@ -1,6 +1,7 @@
 // Config values. May be overriden prior to tasks executing.
 module.exports.WATCHING = false;
 
+module.exports.CLIENT_ENTRY = './src/bootstrap';
 module.exports.SOURCE_FILES = ['src/**/*.{js,jsx}'];
 module.exports.TEST_FILES = [__dirname + '/src/sandbox.js', 'test/**/*.js'];    // eslint-disable-line prefer-template
 

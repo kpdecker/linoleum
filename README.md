@@ -16,6 +16,7 @@ var Linoleum = require('linoleum');
 require('linoleum/tasks/clean');
 require('linoleum/tasks/lint');
 require('linoleum/tasks/babel');
+require('linoleum/tasks/webpack');
 require('linoleum/tasks/test');
 require('linoleum/tasks/cover');
 ```
@@ -46,6 +47,10 @@ Defines the `lint` task which will lint all source and test files.
 ### linoleum/tasks/babel
 
 Defines the `babel` task which builds all source content to their ES5 equivalent.
+
+### linoleum/tasks/webpack
+
+Defines the `webpack` task which generates a client build package.
 
 ### linoleum/tasks/test
 
