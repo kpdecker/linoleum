@@ -23,6 +23,7 @@
     "chai-string": "^1.1.2",
     "del": "^2.0.2",
     "eslint-config-recall": "projectrecall/eslint-config-recall",
+    "eslint-plugin-react": "^3.4.2",
     "gulp-babel": "^5.2.1",
     "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
