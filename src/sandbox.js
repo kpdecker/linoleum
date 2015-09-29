@@ -19,6 +19,12 @@ afterEach(function() {
   this.sandbox.restore();
 });
 
-process.on('unhandledRejection', (err) => {
+function unhandledRejection(err) {
   throw err;
+}
+before(function() {
+  process.on('unhandledRejection', unhandledRejection);
+});
+after(function() {
+  process.removeListener('unhandledRejection', unhandledRejection);
 });
