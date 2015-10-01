@@ -15,6 +15,11 @@ describe('watch', function() {
     watch('*.js', 'foo');
     expect(Gulp.task).to.have.been.calledWith('watch:foo');
   });
+  it('register tasks with options', function() {
+    this.stub(Gulp, 'task');
+    watch('*.js', 'foo', {timeout: 1234});
+    expect(Gulp.task).to.have.been.calledWith('watch:foo');
+  });
 
   it('should initialize watch', function(done) {
     let counter = 0;
