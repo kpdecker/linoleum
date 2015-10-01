@@ -21,6 +21,7 @@ afterEach(function() {
 
 /* istanbul ignore next */
 function unhandledRejection(err) {
+  console.error(`Unhandled rejections: ${err.stack || err}`);
   throw err;
 }
 before(function() {
