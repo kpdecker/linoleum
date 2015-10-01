@@ -23,3 +23,12 @@ require('source-map-support').install({
 });
 
 module.exports.watch = require('./src/watch');
+
+module.exports.jsFiles = function() {
+  return module.exports.SOURCE_FILES.concat(
+      module.exports.TEST_FILES);
+};
+
+module.exports.testFiles = function() {
+  return module.exports.TEST_FILES;
+};

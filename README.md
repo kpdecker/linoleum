@@ -28,6 +28,8 @@ Global APIs:
 - `TEST_FILES`: Glob representing test files. May be overridden.
 - `BUILD_TARGET`: Path that build artifacts will be output to. May be overridden.
 - `COVERAGE_TARGET`: Path that coverage reports will be output to. May be overridden.
+- `jsFiles`: Helper used to generate the final list js files glob
+- `testFiles`: Helper used to generate the final list test files glob
 - `watch`: Helper utility to watch and immediately run a particular command on a set of files:
 
   ```

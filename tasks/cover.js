@@ -7,7 +7,7 @@ import {transform} from 'babel';
 
 import plumber from '../src/plumber';
 
-import {SOURCE_FILES, TEST_FILES, COVERAGE_TARGET} from '../index';
+import {SOURCE_FILES, COVERAGE_TARGET, testFiles} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
 Gulp.task('cover:mocha', function(done) {
@@ -32,7 +32,7 @@ Gulp.task('cover:mocha', function(done) {
       }))
       .pipe(istanbul.hookRequire())
       .on('finish', function() {
-        Gulp.src(TEST_FILES)
+        Gulp.src(testFiles())
             .pipe(plumber(done))
             .pipe(mocha())
             .pipe(istanbul.writeReports({

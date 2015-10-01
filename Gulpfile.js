@@ -19,7 +19,7 @@ Gulp.task('cover', ['build'], function(done) {
   runSequence('cover:mocha', done);
 });
 
-Linoleum.watch(Linoleum.SOURCE_FILES.concat(Linoleum.TEST_FILES), 'cover');
+Linoleum.watch(Linoleum.jsFiles(), 'cover');
 
 Gulp.task('travis', function(done) {
   // These need to be run in series to prevent issues with error tracking
