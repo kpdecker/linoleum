@@ -21,13 +21,11 @@ describe('watch', function() {
     Gulp.task('doit', function() {
       expect(Index.WATCHING).to.equal(true);
 
-      console.log('doit', counter);
       if (counter++ >= 1) {
         done();
       }
     });
     this.stub(Gulp, 'watch', function(glob, callback) {
-      console.log('watch');
       expect(glob).to.equal('*.js');
       callback();
     });
