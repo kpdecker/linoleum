@@ -22,7 +22,8 @@ require('source-map-support').install({
   hookRequire: true
 });
 
-module.exports.watch = require('./src/watch');
+module.exports.watch = require('./src/watch').default;
+module.exports.runTask = require('./src/watch').runTask;
 
 module.exports.jsFiles = function() {
   return module.exports.SOURCE_FILES.concat(
