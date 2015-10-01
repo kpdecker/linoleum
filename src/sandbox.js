@@ -19,6 +19,7 @@ afterEach(function() {
   this.sandbox.restore();
 });
 
+/* istanbul ignore next */
 function unhandledRejection(err) {
   throw err;
 }

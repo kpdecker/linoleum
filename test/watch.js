@@ -17,15 +17,21 @@ describe('watch', function() {
   });
 
   it('should initialize watch', function(done) {
-    this.stub(Gulp, 'start');
-    this.stub(Gulp, 'watch');
-    this.stub(Gulp, 'task', function(name, fn) {
-      fn();
+    let counter = 0;
+    Gulp.task('doit', function() {
       expect(Index.WATCHING).to.equal(true);
-      expect(Gulp.watch).to.have.been.calledWith('*.js', ['foo']);
-      expect(Gulp.start).to.have.been.calledWith('foo');
-      done();
+
+      console.log('doit', counter);
+      if (counter++ >= 1) {
+        done();
+      }
     });
-    watch('*.js', 'foo');
+    this.stub(Gulp, 'watch', function(glob, callback) {
+      console.log('watch');
+      expect(glob).to.equal('*.js');
+      callback();
+    });
+    watch('*.js', 'doit');
+    Gulp.start('watch:doit');
   });
 });
