@@ -13,10 +13,10 @@ Gulp.task('build', function(done) {
   runSequence(['clean', 'lint'], 'babel', done);
 });
 Gulp.task('test', ['build'], function(done) {
-  runSequence('test:mocha', done);
+  Linoleum.runTask('test:mocha', done);
 });
 Gulp.task('cover', ['build'], function(done) {
-  runSequence('cover:mocha', done);
+  Linoleum.runTask('cover:mocha', done);
 });
 
 Linoleum.watch(Linoleum.jsFiles(), 'cover');
