@@ -23,9 +23,9 @@ afterEach(function() {
 function unhandledRejection(err) {
   throw err;
 }
-before(function() {
+beforeEach(function() {
   process.on('unhandledRejection', unhandledRejection);
 });
-after(function() {
+afterEach(function() {
   process.removeListener('unhandledRejection', unhandledRejection);
 });
