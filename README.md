@@ -26,6 +26,7 @@ Global APIs:
 - `WATCHING`: Set to true if the build is in watch mode.
 - `SOURCE_FILES`: Glob representing source files. May be overridden.
 - `TEST_FILES`: Glob representing test files. May be overridden.
+- `KARMA_TEST_FILES`: Glob representing karma test files. May be overridden. Will be ignored from mocha tests.
 - `BUILD_TARGET`: Path that build artifacts will be output to. May be overridden.
 - `COVERAGE_TARGET`: Path that coverage reports will be output to. May be overridden.
 - `jsFiles`: Helper used to generate the final list js files glob

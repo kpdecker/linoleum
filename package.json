@@ -34,6 +34,11 @@
     "gulp-plumber": "^1.0.1",
     "gulp-util": "^3.0.6",
     "istanbul": "kpdecker/istanbul",
+    "karma": "^0.13.10",
+    "karma-mocha": "^0.2.0",
+    "karma-sinon": "^1.0.4",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.3.3",
     "sinon-chai": "^2.8.0",
     "source-map-support": "kpdecker/node-source-map-support",
     "webpack": "^1.12.2"

@@ -3,6 +3,7 @@ module.exports.WATCHING = false;
 
 module.exports.CLIENT_ENTRY = './src/bootstrap';
 module.exports.SOURCE_FILES = ['src/**/*.{js,jsx}'];
+module.exports.KARMA_TEST_FILES = ['test/karma/**/*.js'];
 module.exports.TEST_FILES = [__dirname + '/src/sandbox.js', 'test/**/*.js'];    // eslint-disable-line prefer-template
 
 module.exports.BUILD_TARGET = 'lib/';
@@ -27,9 +28,13 @@ module.exports.runTask = require('./src/watch').runTask;
 
 module.exports.jsFiles = function() {
   return module.exports.SOURCE_FILES.concat(
-      module.exports.TEST_FILES);
+      module.exports.TEST_FILES,
+      module.exports.KARMA_TEST_FILES);
 };
 
 module.exports.testFiles = function() {
-  return module.exports.TEST_FILES;
+  return module.exports.TEST_FILES.concat(
+    module.exports.KARMA_TEST_FILES.map(function(file) {
+      return '!' + file;    // eslint-disable-line prefer-template
+    }));
 };
