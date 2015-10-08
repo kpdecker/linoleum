@@ -22,7 +22,13 @@ Linoleum.watch(Linoleum.jsFiles(), 'cover');
 
 Gulp.task('travis', function(done) {
   // These need to be run in series to prevent issues with error tracking
-  runSequence('cover', 'test', done);
+  Linoleum.runTask('cover', function(err) {
+    if (err) {
+      done(err);
+    } else {
+      Linoleum.runTask('test', done);
+    }
+  });
 });
 Gulp.task('default', ['cover']);
 
