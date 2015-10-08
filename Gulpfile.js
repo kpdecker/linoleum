@@ -1,5 +1,4 @@
 var Gulp = require('gulp'),
-    runSequence = require('run-sequence'),
 
     Linoleum = require('./index');
 
@@ -9,8 +8,8 @@ require('./tasks/babel');
 require('./tasks/test');
 require('./tasks/cover');
 
-Gulp.task('build', function(done) {
-  runSequence(['clean', 'lint'], 'babel', done);
+Gulp.task('build', ['clean', 'lint'], function(done) {
+  Linoleum.runTask('babel', done);
 });
 Gulp.task('test', ['build'], function(done) {
   Linoleum.runTask('test:mocha', done);
