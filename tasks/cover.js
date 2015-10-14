@@ -30,7 +30,7 @@ Gulp.task('cover:mocha', function(done) {
         includeUntested: true,
         sourceMap: true
       }))
-      .pipe(istanbul.hookRequire())
+      .pipe(istanbul.hookRequire({extensions: ['.js', '.jsx']}))
       .on('finish', function() {
         Gulp.src(testFiles())
             .pipe(plumber(done))
