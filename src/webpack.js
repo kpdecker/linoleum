@@ -5,7 +5,7 @@ import BABEL_DEFAULTS from '../babel-defaults';
 
 export default function() {
   let ret = {
-    entry: CLIENT_ENTRY,
+    entry: [CLIENT_ENTRY],
     output: {
       path: `${BUILD_TARGET}/$client$/`,
       publicPath: '/static/'
@@ -26,6 +26,10 @@ export default function() {
       ]
     },
 
+    plugins: [
+      new webpack.NoErrorsPlugin()
+    ],
+
     externals: {
       sinon: 'sinon'
     },
@@ -41,8 +45,7 @@ export default function() {
 
   // Strip development code
   if (process.env.NODE_ENV === 'production') {    // eslint-disable-line no-process-env
-    ret.plugins = [
-      new webpack.NoErrorsPlugin(),
+    ret.plugins.push(
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': '"production"'
@@ -52,11 +55,7 @@ export default function() {
         compress: true,
         mangle: true
       })
-    ];
-  } else {
-    ret.plugins = [
-      new webpack.NoErrorsPlugin()
-    ];
+    );
   }
 
   return ret;
