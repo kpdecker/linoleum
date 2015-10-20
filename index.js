@@ -9,6 +9,9 @@ module.exports.TEST_FILES = [__dirname + '/src/sandbox.js', 'test/**/*.js'];    
 module.exports.BUILD_TARGET = 'lib/';
 module.exports.COVERAGE_TARGET = './coverage';
 
+module.exports.SERVER_PORT = 3000;
+module.exports.DEV_SERVER_PORT = 3001;
+
 // Hack around es6 module definitions without bootstrapping the transpiler
 module.exports.__esModule = true;
 

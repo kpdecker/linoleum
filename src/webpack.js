@@ -15,8 +15,13 @@ export default function() {
       loaders: [
         {
           test: /\.jsx?$/,
-          loader: `${require.resolve('babel-loader')}?${mapBabelOptions(BABEL_DEFAULTS)}`,
-          exclude: /(node_modules|bower_components)/
+          loader: require.resolve('babel-loader'),
+          exclude: /(node_modules|bower_components)/,
+          query: {
+            plugins: [],
+            ... BABEL_DEFAULTS
+          },
+          babel: true
         },
 
         {
@@ -59,15 +64,4 @@ export default function() {
   }
 
   return ret;
-}
-
-function mapBabelOptions(options) {
-  return Object.keys(options).map((key) => {
-    let value = options[key];
-    if (Array.isArray(key)) {
-      return value.map((value) => `${key}[]=${value}`).join('&');
-    } else {
-      return `${key}=${value}`;
-    }
-  }).join('&');
 }
