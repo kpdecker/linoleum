@@ -7,6 +7,7 @@ import mocha from 'gulp-mocha';
 import {Instrumenter} from 'istanbul';
 import Checker from 'istanbul-threshold-checker';
 import {transform} from 'babel';
+import {Server as KarmaServer} from 'karma';
 
 import plumber from '../src/plumber';
 import {runTask} from '../src/watch';
@@ -49,6 +50,13 @@ Gulp.task('cover:mocha', function(done) {
             }))
             .on('end', done);
       });
+});
+
+Gulp.task('cover:karma', function(done) {
+  new KarmaServer({
+    configFile: `${__dirname}/../src/karma.js`,
+    singleRun: true
+  }, done).start();
 });
 
 Gulp.task('cover:report', function(done) {

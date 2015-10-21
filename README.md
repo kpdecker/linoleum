@@ -18,6 +18,7 @@ require('linoleum/tasks/lint');
 require('linoleum/tasks/babel');
 require('linoleum/tasks/webpack');
 require('linoleum/tasks/test');
+require('linoleum/tasks/karma');
 require('linoleum/tasks/cover');
 ```
 
@@ -59,8 +60,13 @@ Defines the `webpack` task which generates a client build package.
 
 Defines the `test:mocha` task which runs in-process Node tests.
 
+### linoleum/tasks/karma
+
+Defines the `watch:karma` task which runs Karma tests in watch mode.
+
 ### linoleum/tasks/cover
 
 Defines:
 - `cover:mocha` task which runs in-process Node coverage tests.
+- `cover:karma` task which runs karma coverage tests.
 - `cover:report` task which combines raw data from the other coverage tasks and asserts coverage.
