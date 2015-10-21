@@ -61,4 +61,6 @@ Defines the `test:mocha` task which runs in-process Node tests.
 
 ### linoleum/tasks/cover
 
-Defines the `cover:mocha` task which runs in-process Node coverage tests.
+Defines:
+- `cover:mocha` task which runs in-process Node coverage tests.
+- `cover:report` task which combines raw data from the other coverage tasks and asserts coverage.

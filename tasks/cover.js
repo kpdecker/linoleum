@@ -1,14 +1,21 @@
+import _ from 'lodash';
 import Gulp from 'gulp';
+import {PluginError} from 'gulp-util';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 
 import {Instrumenter} from 'istanbul';
+import Checker from 'istanbul-threshold-checker';
 import {transform} from 'babel';
 
 import plumber from '../src/plumber';
+import {runTask} from '../src/watch';
 
-import {SOURCE_FILES, COVERAGE_TARGET, testFiles} from '../index';
+import {SOURCE_FILES, COVERAGE_TARGET, WATCHING, testFiles} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
+
+import {Collector, Report} from 'istanbul';
+import through from 'through2';
 
 Gulp.task('cover:mocha', function(done) {
   Gulp.src(SOURCE_FILES)
@@ -37,10 +44,49 @@ Gulp.task('cover:mocha', function(done) {
             .pipe(mocha())
             .pipe(istanbul.writeReports({
               dir: COVERAGE_TARGET,
-              reporters: [ 'lcov', 'json', 'text-summary' ],
-              reportOpts: { dir: COVERAGE_TARGET }
+              reporters: [ 'json' ],
+              reportOpts: { dir: `${COVERAGE_TARGET}/mocha` }
             }))
-            .pipe(istanbul.enforceThresholds({thresholds: {global: 100}}))
             .on('end', done);
       });
+});
+
+Gulp.task('cover:report', function(done) {
+  let collector = new Collector();
+
+  Gulp.src(`${COVERAGE_TARGET}/**/coverage-final.json`)
+    .pipe(through.obj(function(file, enc, cb) {
+      collector.add(JSON.parse(file.contents.toString()));
+
+      cb();
+    }))
+    .on('finish', function() {
+      let report = Report.create('lcov', {dir: COVERAGE_TARGET});
+      report.writeReport(collector, true);
+
+      report = Report.create('text-summary');
+      report.writeReport(collector, true);
+
+      if (!WATCHING) {
+        let results = Checker.checkFailures({global: 100}, collector.getFinalCoverage());
+        function criteria(type) {
+          return (type.global && type.global.failed) || (type.each && type.each.failed);
+        }
+
+        if (_.any(results, criteria)) {
+          this.emit('error', new PluginError({
+            plugin: 'coverage',
+            message: 'Coverage failed'
+          }));
+        }
+      }
+
+      done();
+    });
+});
+
+Gulp.task('watch:cover:report', function() {
+  Gulp.watch(`${COVERAGE_TARGET}/**/coverage-final.json`, function() {
+    runTask('cover:report');
+  });
 });
