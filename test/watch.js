@@ -38,6 +38,27 @@ describe('watch', function() {
     Gulp.start('watch:doit');
   });
 
+  it('should call setup task', function(done) {
+    let counter = 0;
+    Gulp.task('setup', function() {
+      expect(counter).to.equal(0);
+      counter++;
+    });
+    Gulp.task('doit', function() {
+      expect(Index.WATCHING).to.equal(true);
+
+      if (counter++ >= 2) {
+        done();
+      }
+    });
+    this.stub(Gulp, 'watch', function(glob, callback) {
+      expect(glob).to.equal('*.js');
+      callback();
+    });
+    watch('*.js', 'doit', {setup: 'setup'});
+    Gulp.start('watch:doit');
+  });
+
   describe('#runTask', function() {
     it('should initialize watch', function(done) {
       let a, b;

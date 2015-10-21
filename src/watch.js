@@ -44,6 +44,13 @@ export default function(files, command, options = {}) {
     Gulp.watch(files, batch(options, function(events, done) {
       runTask(command, done);
     }));
-    Gulp.start(command);
+
+    if (options.setup) {
+      runTask(options.setup, function() {
+        Gulp.start(command);
+      });
+    } else {
+      Gulp.start(command);
+    }
   });
 }
