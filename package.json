@@ -52,6 +52,7 @@
     "react-transform-hmr": "^1.0.1",
     "sinon-chai": "^2.8.0",
     "source-map-support": "kpdecker/node-source-map-support",
+    "through2": "^2.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
   },
@@ -63,8 +64,7 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
-    "sinon": "^1.17.0",
-    "through2": "^2.0.0"
+    "sinon": "^1.17.0"
   },
   "eslintConfig": {
     "extends": [
