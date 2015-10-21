@@ -7,14 +7,35 @@ import * as Index from '../index';
 // the potentially hazardous error handling logic.
 // We will likely need to revisit this under Gulp 4.
 export function runTask(command, done) {
-  function cleanup() {
-    Gulp.removeListener('task_stop', cleanup);
-    Gulp.removeListener('task_err', cleanup);
-    done();
+  if (!Array.isArray(command)) {
+    command = [command];
+  } else {
+    command = command.slice();
   }
-  Gulp.once('task_stop', cleanup);
-  Gulp.once('task_err', cleanup);
-  Gulp.start(command);
+
+  let waitingFor;
+  function run({task}) {
+    if (task !== waitingFor) {
+      return;
+    }
+
+    if (command.length) {
+      waitingFor = command.shift();
+      Gulp.start(waitingFor);
+    } else {
+      cleanup();
+    }
+  }
+  function cleanup() {
+    Gulp.removeListener('task_stop', run);
+    Gulp.removeListener('task_err', cleanup);
+    if (done) {
+      done();
+    }
+  }
+  Gulp.on('task_stop', run);
+  Gulp.on('task_err', cleanup);
+  run({});
 }
 
 export default function(files, command, options = {}) {

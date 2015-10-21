@@ -1,4 +1,4 @@
-import watch from '../src/watch';
+import watch, {runTask} from '../src/watch';
 import * as Index from '../index';
 
 import Gulp from 'gulp';
@@ -36,5 +36,49 @@ describe('watch', function() {
     });
     watch('*.js', 'doit');
     Gulp.start('watch:doit');
+  });
+
+  describe('#runTask', function() {
+    it('should initialize watch', function(done) {
+      let a, b;
+
+      Gulp.task('a', function() {
+        a = true;
+      });
+      Gulp.task('b', function() {
+        b = true;
+      });
+      runTask(['a', 'b'], function() {
+        expect(a).to.be.true;
+        expect(b).to.be.true;
+        done();
+      });
+    });
+    it('should wait until target completes', function(done) {
+      let a, b;
+
+      Gulp.task('a', function() {
+        a = true;
+      });
+      Gulp.task('b', ['a'], function() {
+        b = true;
+      });
+      runTask('b', function() {
+        expect(a).to.be.true;
+        expect(b).to.be.true;
+        done();
+      });
+    });
+    it('not fail with out callback', function(done) {
+      let a;
+      Gulp.task('a', function() {
+        a = true;
+      });
+      runTask('a');
+      setTimeout(function() {
+        expect(a).to.be.true;
+        done();
+      }, 10);
+    });
   });
 });
