@@ -70,3 +70,21 @@ Defines:
 - `cover:mocha` task which runs in-process Node coverage tests.
 - `cover:karma` task which runs karma coverage tests.
 - `cover:report` task which combines raw data from the other coverage tasks and asserts coverage.
+
+
+## Common issues
+### Karma
+
+Travis needs to be configured to use Firefox when running Karma tests. This can be done with the following config:
+
+```
+env:
+  - KARMA_BROWSER=Firefox
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
+```
+
+If a `Error: Path doesn't exist '/_karma_webpack_/karma-index.js'` or similar is seen when running Karma, this is due to the Karma tests directory not existing.
