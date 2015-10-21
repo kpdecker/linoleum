@@ -3,7 +3,7 @@ import GUtil from 'gulp-util';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
-import {SERVER_PORT, DEV_SERVER_PORT} from '../index';
+import {SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
 import loadWebpackConfig from '../src/webpack';
 
 Gulp.task('webpack', function(done) {
@@ -12,7 +12,7 @@ Gulp.task('webpack', function(done) {
         throw new GUtil.PluginError('webpack', err);
       }
       GUtil.log('[webpack]', stats.toString({
-          // output options
+        chunks: !WATCHING
       }));
       done();
   });
