@@ -80,7 +80,7 @@ Gulp.task('cover:report', function(done) {
               errors = [];
 
           if (summary.lines.pct < 100) {
-            let lines = _.concat(_.map(summary.linesCovered, (value, key) => value ? undefined : key));
+            let lines = _.compact(_.map(summary.linesCovered, (value, key) => value ? undefined : key));
             if (lines.length) {
               errors.push(`lines: ${lines.join(', ')}`);
             }
