@@ -17,9 +17,11 @@ import BABEL_DEFAULTS from '../babel-defaults';
 import {Collector, Report} from 'istanbul';
 import through from 'through2';
 
-Gulp.task('cover:mocha', function(done) {
-  Gulp.src(SOURCE_FILES)
-      .pipe(plumber(done))
+// This task hierarchy is to hack around
+// https://github.com/sindresorhus/gulp-mocha/issues/112
+Gulp.task('cover:mocha:pre', function() {
+  return Gulp.src(SOURCE_FILES)
+      .pipe(plumber())
       .pipe(istanbul({
         instrumenter(opts) {
           // Hack around our own instrumenter so we can execute against inline paths but still instrument
@@ -37,18 +39,20 @@ Gulp.task('cover:mocha', function(done) {
         includeUntested: true,
         sourceMap: true
       }))
-      .pipe(istanbul.hookRequire({extensions: ['.js', '.jsx']}))
-      .on('finish', function() {
-        Gulp.src(testFiles())
-            .pipe(plumber(done))
-            .pipe(mocha())
-            .pipe(istanbul.writeReports({
-              dir: COVERAGE_TARGET,
-              reporters: [ 'json' ],
-              reportOpts: { dir: `${COVERAGE_TARGET}/mocha` }
-            }))
-            .on('end', done);
-      });
+      .pipe(istanbul.hookRequire({extensions: ['.js', '.jsx']}));
+});
+Gulp.task('cover:mocha:run', ['cover:mocha:pre'], function() {
+  return Gulp.src(testFiles())
+      .pipe(plumber())
+      .pipe(mocha());
+});
+Gulp.task('cover:mocha', ['cover:mocha:run'], function() {
+  return Gulp.src(testFiles())
+      .pipe(istanbul.writeReports({
+        dir: COVERAGE_TARGET,
+        reporters: [ 'json' ],
+        reportOpts: { dir: `${COVERAGE_TARGET}/mocha` }
+      }));
 });
 
 Gulp.task('cover:karma', function(done) {
