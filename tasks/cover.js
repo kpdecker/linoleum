@@ -4,8 +4,7 @@ import {PluginError} from 'gulp-util';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 
-import {Instrumenter} from 'istanbul';
-import Checker from 'istanbul-threshold-checker';
+import {Instrumenter, utils} from 'istanbul';
 import {transform} from 'babel';
 import {Server as KarmaServer} from 'karma';
 
@@ -76,15 +75,58 @@ Gulp.task('cover:report', function(done) {
       report.writeReport(collector, true);
 
       if (!WATCHING) {
-        let results = Checker.checkFailures({global: 100}, collector.getFinalCoverage());
-        function criteria(type) {
-          return (type.global && type.global.failed) || (type.each && type.each.failed);
-        }
+        let errors = _.compact(_.map(collector.getFinalCoverage(), (file, path) => {
+          let summary = utils.summarizeFileCoverage(file),
+              errors = [];
 
-        if (_.any(results, criteria)) {
+          if (summary.lines.pct < 100) {
+            let lines = _.concat(_.map(summary.linesCovered, (value, key) => value ? undefined : key));
+            if (lines.length) {
+              errors.push(`lines: ${lines.join(', ')}`);
+            }
+          }
+          if (summary.statements.pct < 100) {
+            let statements = _.compact(_.map(file.s, (coverage, id) => {
+              if (!coverage && !file.statementMap[id].skip) {
+                return file.statementMap[id].start.line;
+              }
+            }));
+            if (statements.length) {
+              errors.push(`statements: line #${statements.join(', ')}`);
+            }
+          }
+          if (summary.functions.pct < 100) {
+            let functions = _.compact(_.map(file.f, (coverage, id) => {
+              if (!coverage && !file.fnMap[id].skip) {
+                return file.fnMap[id].line;
+              }
+            }));
+            if (functions.length) {
+              errors.push(`functions: line #${functions.join(', ')}`);
+            }
+          }
+          if (summary.branches.pct < 100) {
+            let branches = _.compact(_.map(file.b, (coverage, id) => {
+              let branch = file.branchMap[id];
+              coverage = _.map(coverage, (coverage, location) => !coverage && !branch.locations[location].skip);
+              if (_.includes(coverage, true)) {
+                return file.branchMap[id].line;
+              }
+            }));
+            if (branches.length) {
+              errors.push(`branches: line #${branches.join(', ')}`);
+            }
+          }
+
+          if (errors.length > 0) {
+            return `${path}\n    ${errors.join('\n    ')}`;
+          }
+        }));
+
+        if (errors.length) {
           this.emit('error', new PluginError({
             plugin: 'coverage',
-            message: 'Coverage failed'
+            message: `Coverage failed:\n${errors.join('\n')}`
           }));
         }
       }

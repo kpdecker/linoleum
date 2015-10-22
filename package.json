@@ -37,7 +37,6 @@
     "imports-loader": "^0.6.5",
     "istanbul": "kpdecker/istanbul",
     "istanbul-instrumenter-loader": "^0.1.3",
-    "istanbul-threshold-checker": "^0.1.0",
     "karma": "^0.13.10",
     "karma-chrome-launcher": "^0.2.1",
     "karma-coverage": "^0.5.3",
