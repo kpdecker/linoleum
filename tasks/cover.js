@@ -62,10 +62,10 @@ Gulp.task('cover:karma', function(done) {
   }, done).start();
 });
 
-Gulp.task('cover:report', function(done) {
+Gulp.task('cover:report', function() {
   let collector = new Collector();
 
-  Gulp.src(`${COVERAGE_TARGET}/**/coverage-final.json`)
+  return Gulp.src(`${COVERAGE_TARGET}/**/coverage-final.json`)
     .pipe(through.obj(function(file, enc, cb) {
       collector.add(JSON.parse(file.contents.toString()));
 
@@ -134,8 +134,6 @@ Gulp.task('cover:report', function(done) {
           }));
         }
       }
-
-      done();
     });
 });
 
