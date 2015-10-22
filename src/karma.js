@@ -37,7 +37,7 @@ module.exports = function(config) {
     webpack,
 
     webpackMiddleware: {
-      noInfo: !process.env.KARMA_DEBUG
+      noInfo: true
     },
 
     coverageReporter: {
