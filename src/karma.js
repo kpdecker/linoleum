@@ -16,6 +16,9 @@ module.exports = function(config) {
   let webpack = loadWebpackConfig();
   webpack.devtool = 'inline-source-map';
 
+  // We only need the test asset here
+  delete webpack.entry;
+
   webpack.module.postLoaders = [{
     test: /\.js$/,
     exclude: /(test|node_modules|linoleum\/src)\//,
