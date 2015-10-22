@@ -130,7 +130,7 @@ Gulp.task('cover:report', function() {
         if (errors.length) {
           this.emit('error', new PluginError({
             plugin: 'coverage',
-            message: `Coverage failed:\n${errors.join('\n')}`
+            message: `Coverage failed (line numbers are post-transpiler):\n${errors.join('\n')}`
           }));
         }
       }
