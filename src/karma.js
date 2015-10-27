@@ -14,7 +14,6 @@ let sourceFile = `${__dirname}/karma-test.js`;
 
 module.exports = function(config) {
   let webpack = loadWebpackConfig();
-  webpack.devtool = 'inline-source-map';
 
   // We only need the test asset here
   delete webpack.entry;

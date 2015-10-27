@@ -19,7 +19,11 @@ export default function() {
           exclude: /(node_modules(?!\/linoleum\/src)|bower_components)/,
           query: {
             plugins: [],
-            ... BABEL_DEFAULTS
+            ... BABEL_DEFAULTS,
+
+            // Babel Loader does not support inline source maps that are being used elsewhere, so
+            // we need to reset
+            sourceMap: 'source-map'
           },
           babel: true
         },
@@ -45,7 +49,7 @@ export default function() {
       },
       extensions: ['', '.webpack.js', '.web.js', '.jsx', '.js']
     },
-    devTool: 'eval'
+    devtool: 'inline-source-map'
   };
 
   // Strip development code
