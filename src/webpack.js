@@ -7,9 +7,11 @@ export default function(options = {}) {
   let isProduction = process.env.NODE_ENV === 'production';    // eslint-disable-line no-process-env
   let ret = {
     target: options.node ? 'node' : 'web',
-    entry: [CLIENT_ENTRY],
+    entry: options.entry || {
+      boostrap: CLIENT_ENTRY
+    },
     output: {
-      path: `${BUILD_TARGET}/$client$/`,
+      path: options.path || `${BUILD_TARGET}/$client$/`,
       filename: '[name].js',
       publicPath: '/static/',
       libraryTarget: options.node ? 'commonjs2' : 'var',
@@ -66,7 +68,7 @@ export default function(options = {}) {
           ? ['', '.server.js', '.jsx', '.js']
           : ['', '.web.js', '.jsx', '.js']
     },
-    devtool: 'inline-source-map'
+    devtool: isProduction ? 'source-map' : 'inline-source-map'
   };
 
   // Strip development code

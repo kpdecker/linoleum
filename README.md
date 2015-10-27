@@ -54,7 +54,14 @@ Defines the `babel` task which builds all source content to their ES5 equivalent
 
 ### linoleum/tasks/webpack
 
-Defines the `webpack` task which generates a client build package.
+Defines the `webpack` task which generates webpack build packages.
+
+This includes:
+- `lib/$client$/`: Web client package
+- `lib/index.js`: Node server package
+- `lib/$cover$/`: Test coverage node package
+
+This is intended to replace the `babel` build tasks for projects using Webpack, not augment them.
 
 ### linoleum/tasks/test
 

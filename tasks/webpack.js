@@ -6,16 +6,21 @@ import WebpackDevServer from 'webpack-dev-server';
 import {BUILD_TARGET, SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
 import loadWebpackConfig from '../src/webpack';
 
-Gulp.task('webpack:web', function(done) {
-  webpack(loadWebpackConfig(), handleWebpack(done));
-});
+Gulp.task('webpack', function(done) {
+  let web = loadWebpackConfig(),
+      server = loadWebpackConfig({
+        node: true,
+        entry: {index: './src/index'},
+        path: `${BUILD_TARGET}/`
+      }),
+      cover = loadWebpackConfig({
+        node: true,
+        cover: true,
+        entry: {cover: require.resolve('../src/webpack-server-test')},
+        path: `${BUILD_TARGET}/$cover$/`
+      });
 
-Gulp.task('webpack:server', function(done) {
-  let config = loadWebpackConfig({node: true});
-  config.entry = {index: './src/index'};
-  config.output.path = `${BUILD_TARGET}/`;
-
-  webpack(config, handleWebpack(done));
+  webpack([web, server, cover], handleWebpack(done));
 });
 
 function handleWebpack(done) {
