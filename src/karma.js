@@ -10,7 +10,7 @@ import loadWebpackConfig from './webpack';
 
 import {resolve} from 'path';
 
-let sourceFile = `${__dirname}/karma-test.js`;
+let sourceFile = `${__dirname}/webpack-web-test.js`;
 
 module.exports = function(config) {
   let webpack = loadWebpackConfig({cover: true});

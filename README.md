@@ -65,7 +65,7 @@ This is intended to replace the `babel` build tasks for projects using Webpack, 
 
 ### linoleum/tasks/test
 
-Defines the `test:mocha` task which runs in-process Node tests.
+Defines the `test:mocha` task which runs in-process Node tests. This is not recommended for Webpack projects. Instead the cover tests below are preferred.
 
 ### linoleum/tasks/karma
 
@@ -74,10 +74,12 @@ Defines the `watch:karma` task which runs Karma tests in watch mode.
 ### linoleum/tasks/cover
 
 Defines:
-- `cover:mocha` task which runs in-process Node coverage tests.
-- `cover:karma` task which runs karma coverage tests.
+- `cover:mocha` task which runs in-process Node coverage tests. This is not intended for webpack projects.
+- `cover:server` task which runs webpack coverage tests in node.
+- `cover:web` task which runs webpack coverage tests in browser.
 - `cover:report` task which combines raw data from the other coverage tasks and asserts coverage.
 
+For webpack tests, each package will filter the tests that are imported based on the file suffix. `.server.js` tests will only run under the `cover:server` task and `.web.js` tests will only run under the `cover:web` task. Simple `.js` files will run under both.
 
 ## Common issues
 ### Karma

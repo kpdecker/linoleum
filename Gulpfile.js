@@ -16,7 +16,7 @@ Gulp.task('test', ['build'], function(done) {
   Linoleum.runTask('test:mocha', done);
 });
 Gulp.task('cover', ['build'], function(done) {
-  Linoleum.runTask(['cover:mocha', 'cover:karma', 'cover:report'], done);
+  Linoleum.runTask(['cover:mocha', 'cover:web', 'cover:report'], done);
 });
 
 Linoleum.watch(Linoleum.jsFiles(), 'cover');
