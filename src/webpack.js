@@ -4,7 +4,16 @@ import {CLIENT_ENTRY, BUILD_TARGET} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
 export default function(options = {}) {
-  let isProduction = process.env.NODE_ENV === 'production';    // eslint-disable-line no-process-env
+  let isProduction = process.env.NODE_ENV === 'production',    // eslint-disable-line no-process-env
+      cssLoader,
+      cssModuleNames = isProduction ? `[hash:base64:5]` : `[name]---[local]`,
+      cssParams = `?modules&localIdentName=${cssModuleNames}`;
+  if (options.node) {
+    cssLoader = `${require.resolve('css-loader/locals')}${cssParams}`;
+  } else {
+    cssLoader = `${require.resolve('style-loader')}!${require.resolve('css-loader')}${cssParams}`;
+  }
+
   let ret = {
     target: options.node ? 'node' : 'web',
     entry: options.entry || {
@@ -33,6 +42,16 @@ export default function(options = {}) {
             sourceMap: 'source-map'
           },
           babel: true
+        },
+
+        {
+          test: /\.css$/,
+          loader: cssLoader
+        },
+
+        {
+          test: /\.json$/,
+          loader: require.resolve('json-loader')
         },
 
         {
