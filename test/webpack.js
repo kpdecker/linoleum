@@ -18,4 +18,9 @@ describe('webpack config', function() {
     let config = webpack();
     expect(config.plugins).to.have.length(3);
   });
+
+  it('should generate node config', function() {
+    let config = webpack({node: true});
+    expect(config.target).to.equal('node');
+  });
 });

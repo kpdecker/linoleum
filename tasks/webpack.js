@@ -3,20 +3,32 @@ import GUtil from 'gulp-util';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
-import {SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
+import {BUILD_TARGET, SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
 import loadWebpackConfig from '../src/webpack';
 
-Gulp.task('webpack', function(done) {
-  webpack(loadWebpackConfig(), function(err, stats) {
-      if (err) {
-        throw new GUtil.PluginError('webpack', err);
-      }
-      GUtil.log('[webpack]', stats.toString({
-        chunks: !WATCHING
-      }));
-      done();
-  });
+Gulp.task('webpack:web', function(done) {
+  webpack(loadWebpackConfig(), handleWebpack(done));
 });
+
+Gulp.task('webpack:server', function(done) {
+  let config = loadWebpackConfig({node: true});
+  config.entry = {index: './src/index'};
+  config.output.path = `${BUILD_TARGET}/`;
+
+  webpack(config, handleWebpack(done));
+});
+
+function handleWebpack(done) {
+  return function(err, stats) {
+    if (err) {
+      throw new GUtil.PluginError('webpack', err);
+    }
+    GUtil.log('[webpack]', stats.toString({
+      chunks: !WATCHING
+    }));
+    done();
+  };
+}
 
 Gulp.task('webpack:dev-server', function(done) {
   let config = loadWebpackConfig(),

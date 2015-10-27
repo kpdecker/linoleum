@@ -3,13 +3,16 @@ import webpack from 'webpack';
 import {CLIENT_ENTRY, BUILD_TARGET} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
-export default function() {
+export default function(options = {}) {
   let isProduction = process.env.NODE_ENV === 'production';    // eslint-disable-line no-process-env
   let ret = {
+    target: options.node ? 'node' : 'web',
     entry: [CLIENT_ENTRY],
     output: {
       path: `${BUILD_TARGET}/$client$/`,
+      filename: '[name].js',
       publicPath: '/static/',
+      libraryTarget: options.node ? 'commonjs2' : 'var',
       pathinfo: !isProduction
     },
 
@@ -41,7 +44,11 @@ export default function() {
       new webpack.NoErrorsPlugin()
     ],
 
-    externals: {
+    externals: options.node ? [
+      // Every non-relative module is external
+      // abc -> require("abc")
+      /^[a-z\/\-0-9]+$/i
+    ] : {
       sinon: 'sinon'
     },
 
@@ -49,7 +56,9 @@ export default function() {
       alias: {
         project: process.cwd()
       },
-      extensions: ['', '.webpack.js', '.web.js', '.jsx', '.js']
+      extensions: options.node
+          ? ['', '.server.js', '.jsx', '.js']
+          : ['', '.web.js', '.jsx', '.js']
     },
     devtool: 'inline-source-map'
   };
