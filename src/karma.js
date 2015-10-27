@@ -13,16 +13,10 @@ import {resolve} from 'path';
 let sourceFile = `${__dirname}/karma-test.js`;
 
 module.exports = function(config) {
-  let webpack = loadWebpackConfig();
+  let webpack = loadWebpackConfig({cover: true});
 
   // We only need the test asset here
   delete webpack.entry;
-
-  webpack.module.postLoaders = [{
-    test: /\.js$/,
-    exclude: /(test|node_modules|linoleum\/src)\//,
-    loader: require.resolve('istanbul-instrumenter-loader')
-  }];
 
   config.set({
     browsers: [process.env.KARMA_BROWSER || 'Chrome'],    // eslint-disable-line no-process-env

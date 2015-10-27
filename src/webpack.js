@@ -37,7 +37,13 @@ export default function(options = {}) {
           test: /\/sinon\/.*\.js$/,
           loader: `${require.resolve('imports-loader')}?define=>false`
         }
-      ]
+      ],
+
+      postLoaders: options.cover ? [{
+        test: /\.jsx?$/,
+        loader: require.resolve('./istanbul-instrumenter-loader'),
+        exclude: /(test|node_modules|linoleum\/src)\//
+      }] : []
     },
 
     plugins: [
