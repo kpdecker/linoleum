@@ -9,7 +9,6 @@ describe('istanbul-instrumenter-loader', function() {
       callback(err, source, sourceMap) {
         expect(err).to.not.exist;
         expect(source).to.match(/code;/);
-        console.log(sourceMap);
         sourceMap = JSON.parse(sourceMap);
         expect(sourceMap.sources).to.eql(['myfile.js']);
         expect(sourceMap.mappings).to.eql(';;;;;;;;sCASAA,IAAA');
