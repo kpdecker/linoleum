@@ -4,11 +4,13 @@ import {CLIENT_ENTRY, BUILD_TARGET} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
 export default function() {
+  let isProduction = process.env.NODE_ENV === 'production';    // eslint-disable-line no-process-env
   let ret = {
     entry: [CLIENT_ENTRY],
     output: {
       path: `${BUILD_TARGET}/$client$/`,
-      publicPath: '/static/'
+      publicPath: '/static/',
+      pathinfo: !isProduction
     },
 
     module: {
@@ -53,7 +55,7 @@ export default function() {
   };
 
   // Strip development code
-  if (process.env.NODE_ENV === 'production') {    // eslint-disable-line no-process-env
+  if (isProduction) {
     ret.plugins.push(
       new webpack.DefinePlugin({
         'process.env': {
