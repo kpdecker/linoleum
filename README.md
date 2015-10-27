@@ -87,4 +87,4 @@ before_script:
   - sleep 3 # give xvfb some time to start
 ```
 
-If a `Error: Path doesn't exist '/_karma_webpack_/karma-index.js'` or similar is seen when running Karma, this is due to the Karma tests directory not existing.
+If a `Error: Path doesn't exist '/_karma_webpack_/karma-test.js'` or similar is seen when running Karma, this is due to the Karma tests directory not existing.
