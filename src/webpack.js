@@ -17,7 +17,7 @@ export default function(options = {}) {
   let ret = {
     target: options.node ? 'node' : 'web',
     entry: options.entry || {
-      boostrap: CLIENT_ENTRY
+      bootstrap: CLIENT_ENTRY
     },
     output: {
       path: options.path || `${BUILD_TARGET}/$client$/`,
