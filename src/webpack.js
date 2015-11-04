@@ -87,6 +87,15 @@ export default function(options = {}) {
     ] : {
     },
 
+    node: {
+      console: false,
+      global: true,
+      process: false,
+      Buffer: false,
+      __filename: false,
+      __dirname: false
+    },
+
     resolve: {
       alias: {
         project: process.cwd(),

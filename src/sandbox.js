@@ -20,12 +20,14 @@ afterEach(function() {
 });
 
 /* istanbul ignore next */
-function unhandledRejection(err) {
-  throw err;
+if (typeof process !== 'undefined') {
+  function unhandledRejection(err) {
+    throw err;
+  }
+  beforeEach(function() {
+    process.on('unhandledRejection', unhandledRejection);
+  });
+  afterEach(function() {
+    process.removeListener('unhandledRejection', unhandledRejection);
+  });
 }
-beforeEach(function() {
-  process.on('unhandledRejection', unhandledRejection);
-});
-afterEach(function() {
-  process.removeListener('unhandledRejection', unhandledRejection);
-});
