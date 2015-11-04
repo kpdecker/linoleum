@@ -84,7 +84,20 @@ Gulp.task('cover:report', function() {
 
   return Gulp.src(`${COVERAGE_TARGET}/**/coverage-final.json`)
     .pipe(through.obj(function(file, enc, cb) {
-      collector.add(JSON.parse(file.contents.toString()));
+      try {
+        collector.add(JSON.parse(file.contents.toString()));
+      } catch (err) {
+        if (WATCHING) {
+          // We can get into an out of sync state where only one set of coverage
+          // files are updated and the state doesn't match up, cauing istanbul to
+          // blow up. We are ignoring this case and assuming that once the other
+          // coverage process completes we will return to a consistent state in
+          // the report.
+          return;
+        } else {
+          throw err;
+        }
+      }
 
       cb();
     }))
