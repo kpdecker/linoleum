@@ -3,7 +3,7 @@ import GUtil from 'gulp-util';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
-import {BUILD_TARGET, SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
+import {CLIENT_ENTRY, BUILD_TARGET, SERVER_PORT, DEV_SERVER_PORT, WATCHING} from '../index';
 import loadWebpackConfig from '../src/webpack';
 
 Gulp.task('webpack', function(done) {
@@ -36,12 +36,16 @@ function handleWebpack(done) {
 }
 
 Gulp.task('webpack:dev-server', function(done) {
-  let config = loadWebpackConfig(),
-      devServer = `http://localhost:${DEV_SERVER_PORT}/`;
-  config.entry.unshift(
-    `${require.resolve('webpack-dev-server/client')}?${devServer}`,
-    require.resolve(`webpack/hot/only-dev-server`)
-  );
+  let devServer = `http://localhost:${DEV_SERVER_PORT}/`,
+      config = loadWebpackConfig({
+        entry: {
+          bootstrap: [
+            `${require.resolve('webpack-dev-server/client')}?${devServer}`,
+            require.resolve(`webpack/hot/only-dev-server`),
+            CLIENT_ENTRY
+          ]
+        }
+      });
   config.plugins.unshift(
     new webpack.HotModuleReplacementPlugin()
   );
