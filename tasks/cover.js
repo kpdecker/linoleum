@@ -17,9 +17,7 @@ import BABEL_DEFAULTS from '../babel-defaults';
 import {Collector, Report} from 'istanbul';
 import through from 'through2';
 
-// This task hierarchy is to hack around
-// https://github.com/sindresorhus/gulp-mocha/issues/112
-Gulp.task('cover:mocha:pre', function() {
+function coverSourceFiles() {
   return Gulp.src(SOURCE_FILES)
       .pipe(plumber())
       .pipe(istanbul({
@@ -38,7 +36,13 @@ Gulp.task('cover:mocha:pre', function() {
         embedSource: true,
         includeUntested: true,
         sourceMap: true
-      }))
+      }));
+}
+
+// This task hierarchy is to hack around
+// https://github.com/sindresorhus/gulp-mocha/issues/112
+Gulp.task('cover:mocha:pre', function() {
+  return coverSourceFiles()
       .pipe(istanbul.hookRequire({extensions: ['.js', '.jsx']}));
 });
 Gulp.task('cover:mocha:run', ['cover:mocha:pre'], function() {
@@ -77,6 +81,17 @@ Gulp.task('cover:web', function(done) {
     configFile: `${__dirname}/../src/karma.js`,
     singleRun: true
   }, done).start();
+});
+
+// Bit of a hack, but lets us ensure that all source files are included
+// in the coverage report.
+Gulp.task('cover:untested', function() {
+  return coverSourceFiles()
+      .pipe(istanbul.writeReports({
+        dir: COVERAGE_TARGET,
+        reporters: [ 'json' ],
+        reportOpts: { dir: `${COVERAGE_TARGET}/untested` }
+      }));
 });
 
 Gulp.task('cover:report', function() {
