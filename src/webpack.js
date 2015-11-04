@@ -97,7 +97,11 @@ export default function(options = {}) {
         'process.env': {
           'NODE_ENV': '"production"'
         }
-      }),
+      })
+    );
+  }
+  if (isProduction && !options.node) {
+    ret.plugins.push(
       new webpack.optimize.UglifyJsPlugin({
         compress: true,
         mangle: true
