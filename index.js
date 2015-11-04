@@ -15,16 +15,7 @@ module.exports.DEV_SERVER_PORT = 3001;
 // Hack around es6 module definitions without bootstrapping the transpiler
 module.exports.__esModule = true;
 
-Error.stackTraceLimit = Infinity;   // And beyond
-
-require('babel/register')(require('./babel-defaults'));
-
-// Must be after babel so our fork overrides the one installed by babel.
-// Aren't unresponsive OSS projects fun!.
-require('source-map-support').install({
-  handleUncaughtExceptions: false,
-  hookRequire: true
-});
+require('./runtime-init');
 
 module.exports.watch = require('./src/watch').default;
 module.exports.runTask = require('./src/watch').runTask;
