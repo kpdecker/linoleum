@@ -1,7 +1,6 @@
 import karmaWebpack from 'karma-webpack';
 import karmaSourcemap from 'karma-sourcemap-loader';
 import karmaMocha from 'karma-mocha';
-import karmaSinon from 'karma-sinon';
 import karmaChrome from 'karma-chrome-launcher';
 import karmaFirefox from 'karma-firefox-launcher';
 import karmaCoverage from 'karma-coverage';
@@ -45,15 +44,11 @@ module.exports = function(config) {
       karmaWebpack,
       karmaSourcemap,
       karmaMocha,
-      karmaSinon,
       karmaChrome,
       karmaFirefox,
       karmaCoverage,
       karmaMochaReporter
     ],
-    frameworks: [
-      'mocha',
-      'sinon'
-    ]
+    frameworks: ['mocha']
   });
 };

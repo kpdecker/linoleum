@@ -56,7 +56,7 @@ export default function(options = {}) {
 
         {
           test: /\/sinon\/.*\.js$/,
-          loader: `${require.resolve('imports-loader')}?define=>false`
+          loader: `${require.resolve('imports-loader')}?define=>false,require=>false`
         }
       ],
 
@@ -76,12 +76,12 @@ export default function(options = {}) {
       // abc -> require("abc")
       /^[a-z\/\-0-9]+$/i
     ] : {
-      sinon: 'sinon'
     },
 
     resolve: {
       alias: {
-        project: process.cwd()
+        project: process.cwd(),
+        sinon: 'sinon/pkg/sinon'
       },
       extensions: options.node
           ? ['', '.server.js', '.jsx', '.js']
