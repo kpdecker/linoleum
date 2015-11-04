@@ -74,7 +74,16 @@ export default function(options = {}) {
     externals: options.node ? [
       // Every non-relative module is external
       // abc -> require("abc")
-      /^[a-z\/\-0-9]+$/i
+      function(context, request, cb) {
+        if (/^[a-z\/\-0-9]+$/i.test(request)) {
+          // We need to force lookup from the global require here, while avoiding exporting
+          // the library type under electron as this fails when trying to assign to module
+          // in the renderer context.
+          cb(undefined, request, 'commonjs2');
+        } else {
+          cb();
+        }
+      }
     ] : {
     },
 

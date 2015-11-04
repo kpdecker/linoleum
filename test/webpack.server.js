@@ -23,4 +23,23 @@ describe('webpack config', function() {
     let config = webpack({node: true});
     expect(config.target).to.equal('node');
   });
+
+  it('should export proper externals', function(done) {
+    let config = webpack({node: true});
+    config.externals[0](undefined, 'foo', (err, request, type) => {
+      expect(err).to.not.exist;
+      expect(request).to.equal('foo');
+      expect(type).to.equal('commonjs2');
+      done();
+    });
+  });
+  it('should not export internals', function(done) {
+    let config = webpack({node: true});
+    config.externals[0](undefined, './foo', (err, request, type) => {
+      expect(err).to.not.exist;
+      expect(request).to.not.exist;
+      expect(type).to.not.exist;
+      done();
+    });
+  });
 });
