@@ -24,7 +24,7 @@ describe('karma config', function() {
 
     let config;
     karma({set(_config) { config = _config; }});
-    expect(config.browsers).to.eql(['Chrome']);
+    expect(config.browsers).to.eql(['Firefox']);
   });
   it('should allow custom browser', function() {
     process.env.KARMA_BROWSER = 'test!';

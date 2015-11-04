@@ -19,7 +19,7 @@ module.exports = function(config) {
   delete webpack.entry;
 
   config.set({
-    browsers: [process.env.KARMA_BROWSER || 'Chrome'],    // eslint-disable-line no-process-env
+    browsers: [process.env.KARMA_BROWSER || 'Firefox'],    // eslint-disable-line no-process-env
     reporters: ['mocha', 'coverage'],
 
     files: [
