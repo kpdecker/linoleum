@@ -14,8 +14,15 @@ export default function(options = {}) {
     cssLoader = `${require.resolve('style-loader')}!${require.resolve('css-loader')}${cssParams}`;
   }
 
+  let target = 'web';
+  if (options.electron) {
+    target = 'electron';
+  } else if (options.node) {
+    target = 'node';
+  }
+
   let ret = {
-    target: options.node ? 'node' : 'web',
+    target,
     entry: options.entry || {
       bootstrap: CLIENT_ENTRY
     },
@@ -71,7 +78,7 @@ export default function(options = {}) {
       new webpack.NoErrorsPlugin()
     ],
 
-    externals: options.node ? [
+    externals: (options.node || options.electron) ? [
       // Every non-relative module is external
       // abc -> require("abc")
       function(context, request, cb) {

@@ -24,6 +24,11 @@ describe('webpack config', function() {
     expect(config.target).to.equal('node');
   });
 
+  it('should generate electron config', function() {
+    let config = webpack({electron: true});
+    expect(config.target).to.equal('electron');
+  });
+
   it('should export proper externals', function(done) {
     let config = webpack({node: true});
     config.externals[0](undefined, 'foo', (err, request, type) => {

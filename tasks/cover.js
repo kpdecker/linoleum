@@ -14,6 +14,10 @@ import {runTask} from '../src/watch';
 import {SOURCE_FILES, BUILD_TARGET, COVERAGE_TARGET, WATCHING, testFiles} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
+import {spawn} from 'child_process';
+import {resolve} from 'path';
+import electronPath from 'electron-prebuilt';
+
 import {Collector, Report} from 'istanbul';
 import through from 'through2';
 
@@ -92,6 +96,23 @@ Gulp.task('cover:untested', function() {
         reporters: [ 'json' ],
         reportOpts: { dir: `${COVERAGE_TARGET}/untested` }
       }));
+});
+
+Gulp.task('cover:electron', function(done) {
+  spawn(electronPath, [
+      `-r`, require.resolve('../runtime-init'),
+      resolve(`${__dirname}/../electron/index.js`),
+      resolve(`${BUILD_TARGET}/$cover$/main.js`),
+      resolve(`${BUILD_TARGET}/$cover$/renderer.js`),
+      resolve(`${COVERAGE_TARGET}/electron`)
+    ], {stdio: 'inherit'})
+    .on('close', (code) => {
+      if (code) {
+        done(new Error(`Electron failed with code: ${code}`));
+      } else {
+        done();
+      }
+    });
 });
 
 Gulp.task('cover:report', function() {
