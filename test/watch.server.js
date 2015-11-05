@@ -59,6 +59,27 @@ describe('watch', function() {
     Gulp.start('watch:doit');
   });
 
+  it('should rerun if triggered while running', function(done) {
+    let counter = 0,
+        callback;
+    Gulp.task('doit', function() {
+      expect(Index.WATCHING).to.equal(true);
+
+      if (counter++ >= 2) {
+        done();
+      } else {
+        callback();
+      }
+    });
+    this.stub(Gulp, 'watch', function(glob, _callback) {
+      callback = _callback;
+      expect(glob).to.equal('*.js');
+      callback();
+    });
+    watch('*.js', 'doit');
+    Gulp.start('watch:doit');
+  });
+
   describe('#runTask', function() {
     it('should initialize watch', function(done) {
       let a, b;

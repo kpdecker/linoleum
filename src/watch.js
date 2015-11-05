@@ -1,5 +1,4 @@
 import Gulp from 'gulp';
-import batch from 'gulp-batch';
 
 import * as Index from '../index';
 
@@ -40,10 +39,31 @@ export function runTask(command, done) {
 
 export default function(files, command, options = {}) {
   Gulp.task(`watch:${command}`, function() {
+    let running = false,
+        rerun = false;
+
     Index.WATCHING = true;    // Enable plumber
-    Gulp.watch(files, batch(options, function(events, done) {
-      runTask(command, done);
-    }));
+    Gulp.watch(files, function watcher() {
+      if (running) {
+        rerun = true;
+        return;
+      }
+
+      running = true;
+      setTimeout(function() {
+        // Ignore any rerun requests that occur in the cooldown
+        // period.
+        rerun = false;
+
+        runTask(command, function() {
+          running = false;
+          if (rerun) {
+            rerun = false;
+            process.nextTick(watcher);
+          }
+        });
+      }, options.timeout || 100);
+    });
 
     if (options.setup) {
       runTask(options.setup, function() {
