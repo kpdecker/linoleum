@@ -7,7 +7,7 @@
   <body>
     <script src="../node_modules/mocha/mocha.js" type="text/javascript"></script>
     <script type="text/javascript">
-      /* global mocha */
+      /* global mocha, window */
       /* eslint-disable no-trailing-spaces, no-console, no-var, eol-last */
       mocha.setup({
         ui: 'bdd',
@@ -16,6 +16,24 @@
       });
 
       var ipc = require('ipc');
+
+      ipc.on('exec', function(tests) {
+        try {
+          console.log('Loading renderer tests', tests);
+          require(tests);
+
+          console.log('Running renderer tests');
+          mocha.run(function(failures) {
+            console.log('Renderer tests complete');
+
+            ipc.send('done', failures, window.__coverage__);
+          });
+        } catch (err) {
+          console.log(err.stack);
+          ipc.send('done', 255);
+        }
+      });
+
       ['log', 'error', 'warn', 'debug'].forEach(function(type) {
         console[type] = function() {
           var args = [];

@@ -46,21 +46,7 @@ App.on('ready', function() {
       failures += mainFailures;
 
       // Kick off the renderer tests
-      mainWindow.webContents.executeJavaScript(`
-        try {
-          require(${JSON.stringify(renderer)});
-
-          console.log('Running renderer tests');
-          mocha.run(function(failures) {
-            console.log('Renderer tests complete');
-
-            ipc.send('done', failures, window.__coverage__);
-          });
-        } catch (err) {
-          console.log(err.stack);
-          ipc.send('done', 255);
-        }
-      `);
+      mainWindow.webContents.send('exec', renderer);
     });
   });
 
