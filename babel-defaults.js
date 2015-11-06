@@ -4,6 +4,7 @@ module.exports = {
   // not building to npm or simliar.
   ignore: function(filename) {
     return ((/node_modules/.test(filename))
+        && !(/linoleum\/electron/.test(filename))
         && !(/linoleum\/src/.test(filename))
         && !(/linoleum\/tasks/.test(filename)))
         || (/\$.*\$/.test(filename));
