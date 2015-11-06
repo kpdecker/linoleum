@@ -16,6 +16,14 @@ let args = process.argv,
 
     failures = 0;
 
+
+process.on('uncaughtException', (error) => {
+  // This breaks Mocha's handler, but that seems safer than
+  // trying to guess which handlers are installed.
+  console.log(error.stack);
+  process.exit(255);
+});
+
 App.on('window-all-closed', function() {
   App.quit();
 });
@@ -35,10 +43,16 @@ App.on('ready', function() {
 
       // Kick off the renderer tests
       mainWindow.webContents.executeJavaScript(`
-        require(${JSON.stringify(renderer)});
-        mocha.run(function(failures) {
-          ipc.send('done', failures, window.__coverage__);
-        });
+        try {
+          require(${JSON.stringify(renderer)});
+
+          mocha.run(function(failures) {
+            ipc.send('done', failures, window.__coverage__);
+          });
+        } catch (err) {
+          console.log(err.stack);
+          ipc.send('done', 255);
+        }
       `);
     });
   });
