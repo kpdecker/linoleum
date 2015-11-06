@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import App from 'app';
 import BrowserWindow from 'browser-window';
 import ipc from 'ipc';
@@ -38,10 +39,13 @@ App.on('ready', function() {
     // Kick off the main tests
     let mocha = new Mocha({});
     mocha.addFile(main);
+
+    console.log('Running main tests');
     mocha.run(function(mainFailures) {
       failures += mainFailures;
 
       // Kick off the renderer tests
+      console.log('Running renderer tests tests');
       mainWindow.webContents.executeJavaScript(`
         try {
           require(${JSON.stringify(renderer)});
