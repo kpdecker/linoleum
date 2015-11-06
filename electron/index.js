@@ -42,15 +42,18 @@ App.on('ready', function() {
 
     console.log('Running main tests');
     mocha.run(function(mainFailures) {
+      console.log('Main tests complete');
       failures += mainFailures;
 
       // Kick off the renderer tests
-      console.log('Running renderer tests tests');
       mainWindow.webContents.executeJavaScript(`
         try {
           require(${JSON.stringify(renderer)});
 
+          console.log('Running renderer tests');
           mocha.run(function(failures) {
+            console.log('Renderer tests complete');
+
             ipc.send('done', failures, window.__coverage__);
           });
         } catch (err) {
