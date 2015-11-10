@@ -10,5 +10,10 @@ module.exports = {
         || (/\$.*\$/.test(filename));
   },
   sourceMap: 'inline',
-  auxiliaryCommentBefore: 'istanbul ignore next'
+  auxiliaryCommentBefore: 'istanbul ignore next',
+  presets: [
+    require.resolve('babel-preset-react'),
+    require.resolve('babel-preset-es2015'),
+    require.resolve('babel-preset-stage-0')
+  ]
 };

@@ -5,7 +5,7 @@ import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 
 import {Instrumenter, utils} from 'istanbul';
-import {transform} from 'babel';
+import {transform} from 'babel-core';
 import {Server as KarmaServer} from 'karma';
 
 import plumber from '../src/plumber';
