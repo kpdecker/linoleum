@@ -87,9 +87,6 @@ For webpack tests, each package will filter the tests that are imported based on
 Travis needs to be configured to use Firefox when running Karma tests. This can be done with the following config:
 
 ```
-env:
-  - KARMA_BROWSER=Firefox
-
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -97,3 +94,32 @@ before_script:
 ```
 
 If a `Error: Path doesn't exist '/_karma_webpack_/karma-test.js'` or similar is seen when running Karma, this is due to the Karma tests directory not existing.
+
+
+### Electron
+
+Electron tests need a similar setup to run under Travis:
+
+```
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
+```
+
+If not set this will generally result in a exit with error code 1 and no additional information.
+
+### Node Compile Issues
+
+Newer versions of Node (5+, potentially earlier) may run into native compiler errors under Travis due to older versions of the C++ compiler. This can be resolved via this config:
+
+```
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+env:
+  - CXX=g++-4.8
+```
