@@ -57,6 +57,11 @@ export default function(options = {}) {
         },
 
         {
+          test: /\.styl$/,
+          loader: `${cssLoader}!stylus-loader`
+        },
+
+        {
           test: /\.json$/,
           loader: require.resolve('json-loader')
         },
