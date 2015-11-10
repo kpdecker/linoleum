@@ -42,7 +42,6 @@ App.on('ready', function() {
 
     console.log('Running main tests');
     mocha.run(function(mainFailures) {
-      console.log('Main tests complete');
       failures += mainFailures;
 
       // Kick off the renderer tests
@@ -64,6 +63,7 @@ App.on('ready', function() {
     writeCoverage(global.__coverage__, coverage);
 
     mainWindow.close();
+    App.quit();
   });
   mainWindow.on('closed', function() {
     mainWindow = null;

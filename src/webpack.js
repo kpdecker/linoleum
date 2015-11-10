@@ -112,7 +112,7 @@ export default function(options = {}) {
           ? ['', '.server.js', '.jsx', '.js']
           : ['', '.web.js', '.jsx', '.js']
     },
-    devtool: isProduction ? 'source-map' : 'inline-source-map'
+    devtool: (options.electron || isProduction) ? 'source-map' : 'inline-source-map'
   };
 
   // Strip development code

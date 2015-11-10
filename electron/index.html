@@ -26,12 +26,10 @@
 
       ipc.on('exec', function(tests) {
         try {
-          console.log('Loading renderer tests', tests);
           require(tests);
 
           console.log('Running renderer tests');
           mocha.run(function(failures) {
-            console.log('Renderer tests complete');
 
             ipc.send('done', failures, window.__coverage__);
           });
@@ -41,6 +39,7 @@
         }
       });
 
+      require('../runtime-init');
       require('mocha/mocha');
       mocha.setup({
         ui: 'bdd',
