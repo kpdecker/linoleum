@@ -1,6 +1,8 @@
 # Linoleum
 
-Project Recall JavaScript build tools.
+Shared javascript build and testing infrastructure
+
+Base project to avoid duplicating infrastructure boilerplate across javascript projects. Provides linting, es6, code coverage, with source maps all running in node, browser, or electron environments.
 
 That's right I've got a floor.
 

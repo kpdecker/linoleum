@@ -1,21 +1,21 @@
 {
   "name": "linoleum",
   "version": "0.0.0",
-  "description": "Recall javascript build infrastructure",
+  "description": "Shared javascript build and testing infrastructure",
   "main": "index.js",
   "scripts": {
     "test": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/projectrecall/linoleum.git"
+    "url": "git+https://github.com/kpdecker/linoleum.git"
   },
   "author": "Kevin Decker <kpdecker@gmail.com> (http://incaseofstairs.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/projectrecall/linoleum/issues"
+    "url": "https://github.com/kpdecker/linoleum/issues"
   },
-  "homepage": "https://github.com/projectrecall/linoleum#readme",
+  "homepage": "https://github.com/kpdecker/linoleum#readme",
   "private": true,
   "dependencies": {
     "babel": "^6.0.15",
@@ -31,7 +31,7 @@
     "css-loader": "^0.21.0",
     "del": "^2.0.2",
     "electron-prebuilt": "^0.34.2",
-    "eslint-config-recall": "projectrecall/eslint-config-recall",
+    "eslint-config-linoleum": "kpdecker/eslint-config-linoleum",
     "eslint-plugin-react": "^3.4.2",
     "gulp-babel": "^6.1.0",
     "gulp-eslint": "^1.0.0",
@@ -74,7 +74,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "recall"
+      "linoleum"
     ],
     "root": true
   }

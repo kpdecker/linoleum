@@ -1,5 +1,5 @@
 {
   extends: [
-    "recall/test"
+    "linoleum/test"
   ]
 }
