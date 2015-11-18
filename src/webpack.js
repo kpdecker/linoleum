@@ -129,6 +129,14 @@ export default function(options = {}) {
         }
       })
     );
+  } else if (!options.node) {
+    ret.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': '"development"'
+        }
+      })
+    );
   }
   if (isProduction && !options.node) {
     ret.plugins.push(
