@@ -19,7 +19,8 @@ module.exports = function(source, sourceMap) {
   }
 
   source = instrumenter.instrumentSync(source, this.resourcePath);
-  sourceMap = convertSourceMap.fromSource(source).toJSON();
+  sourceMap = convertSourceMap.fromSource(source);
+  sourceMap = sourceMap && sourceMap.toJSON();
 
   this.callback(undefined, source, sourceMap);
 };
