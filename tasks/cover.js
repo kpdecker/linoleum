@@ -6,12 +6,11 @@ import mocha from 'gulp-mocha';
 
 import {Instrumenter, utils} from 'istanbul';
 import {transform} from 'babel-core';
-import {Server as KarmaServer} from 'karma';
 
 import plumber from '../src/plumber';
 import {runTask} from '../src/watch';
 
-import {SOURCE_FILES, BUILD_TARGET, COVERAGE_TARGET, WATCHING, testFiles} from '../index';
+import {SOURCE_FILES, COVERAGE_TARGET, WATCHING, testFiles} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
 import {Collector, Report} from 'istanbul';
@@ -57,30 +56,6 @@ Gulp.task('cover:mocha', ['cover:mocha:run'], function() {
         reporters: [ 'json' ],
         reportOpts: { dir: `${COVERAGE_TARGET}/mocha` }
       }));
-});
-
-Gulp.task('cover:server:run', function() {
-  global.__coverage__ = {};
-
-  return Gulp.src(`${BUILD_TARGET}/$cover$/*.js`)
-      .pipe(plumber())
-      .pipe(mocha());
-});
-Gulp.task('cover:server', ['cover:server:run'], function() {
-  return Gulp.src(`${BUILD_TARGET}/$cover$/*.js`)
-      .pipe(istanbul.writeReports({
-        coverageVariable: '__coverage__',
-        dir: COVERAGE_TARGET,
-        reporters: [ 'json' ],
-        reportOpts: { dir: `${COVERAGE_TARGET}/webpack` }
-      }));
-});
-
-Gulp.task('cover:web', function(done) {
-  new KarmaServer({
-    configFile: `${__dirname}/../src/karma.js`,
-    singleRun: true
-  }, done).start();
 });
 
 // Bit of a hack, but lets us ensure that all source files are included
