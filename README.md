@@ -4,6 +4,8 @@ Shared javascript build and testing infrastructure
 
 Base project to avoid duplicating infrastructure boilerplate across javascript projects. Provides linting, es6, code coverage, with source maps all running in node, browser, or electron environments.
 
+For Electron, see [linoleum-electron](https://github.com/kpdecker/linoleum-electron).
+
 That's right I've got a floor.
 
 ## Usage

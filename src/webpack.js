@@ -3,6 +3,20 @@ import webpack from 'webpack';
 import {CLIENT_ENTRY, BUILD_TARGET} from '../index';
 import BABEL_DEFAULTS from '../babel-defaults';
 
+
+// Every non-relative module is external
+// abc -> require("abc")
+export function nodeExternals(context, request, cb) {
+  if (/^[a-z\/\-0-9]+$/i.test(request)) {
+    // We need to force lookup from the global require here, while avoiding exporting
+    // the library type under electron as this fails when trying to assign to module
+    // in the renderer context.
+    cb(undefined, request, 'commonjs2');
+  } else {
+    cb();
+  }
+}
+
 export default function(options = {}) {
   let isProduction = process.env.NODE_ENV === 'production',    // eslint-disable-line no-process-env
       cssLoader,
@@ -15,9 +29,7 @@ export default function(options = {}) {
   }
 
   let target = 'web';
-  if (options.electron) {
-    target = 'electron';
-  } else if (options.node) {
+  if (options.node) {
     target = 'node';
   }
 
@@ -83,21 +95,7 @@ export default function(options = {}) {
       new webpack.NoErrorsPlugin()
     ],
 
-    externals: (options.node || options.electron) ? [
-      // Every non-relative module is external
-      // abc -> require("abc")
-      function(context, request, cb) {
-        if (/^[a-z\/\-0-9]+$/i.test(request)) {
-          // We need to force lookup from the global require here, while avoiding exporting
-          // the library type under electron as this fails when trying to assign to module
-          // in the renderer context.
-          cb(undefined, request, 'commonjs2');
-        } else {
-          cb();
-        }
-      }
-    ] : {
-    },
+    externals: options.node ? [nodeExternals] : {},
 
     node: {
       console: false,
@@ -117,7 +115,7 @@ export default function(options = {}) {
           ? ['', '.server.js', '.jsx', '.js']
           : ['', '.web.js', '.jsx', '.js']
     },
-    devtool: (options.electron || isProduction) ? 'source-map' : 'inline-source-map'
+    devtool: isProduction ? 'source-map' : 'inline-source-map'
   };
 
   // Strip development code

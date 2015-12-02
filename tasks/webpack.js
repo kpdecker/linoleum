@@ -22,34 +22,6 @@ Gulp.task('webpack', function(done) {
 
   webpack([web, server, cover], handleWebpack(done));
 });
-Gulp.task('webpack:electron', function(done) {
-  let main = loadWebpackConfig({
-        electron: true,
-        node: true,
-        entry: {main: './src/index'},
-        path: `${BUILD_TARGET}/`
-      }),
-      renderer = loadWebpackConfig({
-        electron: true,
-        entry: {renderer: './src/bootstrap'},
-        path: `${BUILD_TARGET}/`
-      }),
-      coverMain = loadWebpackConfig({
-        electron: true,
-        node: true,
-        cover: true,
-        entry: {main: require.resolve('../src/webpack-server-test')},
-        path: `${BUILD_TARGET}/$cover$/`
-      }),
-      coverRenderer = loadWebpackConfig({
-        electron: true,
-        cover: true,
-        entry: {renderer: require.resolve('../src/webpack-web-test')},
-        path: `${BUILD_TARGET}/$cover$/`
-      });
-
-  webpack([main, renderer, coverMain, coverRenderer], handleWebpack(done));
-});
 
 function handleWebpack(done) {
   return function(err, stats) {
