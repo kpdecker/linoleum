@@ -2,6 +2,11 @@ var Gulp = require('gulp'),
 
     Linoleum = require('./index');
 
+var $jsFiles = Linoleum.jsFiles;
+Linoleum.jsFiles = function() {
+  return $jsFiles().concat('tasks/*.js', 'index.js');
+};
+
 require('./tasks/clean');
 require('./tasks/lint');
 require('./tasks/babel');
