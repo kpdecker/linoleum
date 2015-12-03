@@ -23,3 +23,7 @@ module.exports.jsFiles = function() {
 module.exports.testFiles = function() {
   return module.exports.TEST_FILES;
 };
+
+require('./tasks/clean');
+require('./tasks/lint');
+require('./tasks/cover');

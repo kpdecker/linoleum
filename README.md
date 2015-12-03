@@ -18,11 +18,8 @@ Within `Gulpfile.js`:
 var Linoleum = require('linoleum');
 
 // Include optional linoleum tasks
-require('linoleum/tasks/clean');
-require('linoleum/tasks/lint');
 require('linoleum/tasks/babel');
 require('linoleum/tasks/test');
-require('linoleum/tasks/cover');
 ```
 
 Global APIs:
