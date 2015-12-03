@@ -2,11 +2,6 @@ var Gulp = require('gulp'),
 
     Linoleum = require('./index');
 
-var $jsFiles = Linoleum.jsFiles;
-Linoleum.jsFiles = function() {
-  return $jsFiles().concat('tasks/*.js', 'index.js');
-};
-
 require('linoleum-node');
 
 Gulp.task('build', ['clean', 'lint'], function(done) {
@@ -27,3 +22,4 @@ Gulp.task('travis', function(done) {
 });
 Gulp.task('default', ['cover']);
 
+require('./Gulpfile.local');
