@@ -1,7 +1,7 @@
 // Helper file to work around some minor differences between the needs when testing these projects directly and
 // when testing normal projects. Pulled out to remove noise from the normal Gulpfiles and to provide better
 // real world examples in those files.
-import Linoleum from './index';
+import * as Linoleum from './index';
 
 // Add our tests and local files to the linter
 let $jsFiles = Linoleum.jsFiles;
