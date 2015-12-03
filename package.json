@@ -32,7 +32,6 @@
     "gulp-babel": "^6.1.0",
     "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
-    "gulp-mocha": "^2.1.3",
     "gulp-plumber": "^1.0.1",
     "gulp-util": "^3.0.6",
     "istanbul": "kpdecker/istanbul",
@@ -50,6 +49,7 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
+    "linoleum-node": "kpdecker/linoleum-node",
     "sinon": "^1.17.0"
   },
   "eslintConfig": {

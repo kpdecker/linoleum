@@ -7,8 +7,7 @@ Linoleum.jsFiles = function() {
   return $jsFiles().concat('tasks/*.js', 'index.js');
 };
 
-require('./tasks/babel');
-require('./tasks/test');
+require('linoleum-node');
 
 Gulp.task('build', ['clean', 'lint'], function(done) {
   Linoleum.runTask('babel', done);

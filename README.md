@@ -4,6 +4,7 @@ Shared javascript build and testing infrastructure
 
 Base project to avoid duplicating infrastructure boilerplate across javascript projects. Provides linting, es6, code coverage, with source maps all running in node, browser, or electron environments.
 
+For Node, see [linoleum-node](https://github.com/kpdecker/linoleum-node).
 For Webpack browser builds, see [linoleum-webpack](https://github.com/kpdecker/linoleum-webpack).
 For Electron, see [linoleum-electron](https://github.com/kpdecker/linoleum-electron).
 
@@ -18,8 +19,9 @@ Within `Gulpfile.js`:
 var Linoleum = require('linoleum');
 
 // Include optional linoleum tasks
-require('linoleum/tasks/babel');
-require('linoleum/tasks/test');
+require('linoleum-node');
+require('linoleum-webpack');
+require('linoleum-electron');
 ```
 
 Global APIs:
@@ -47,18 +49,9 @@ Defines the `clean` task which will remove all build and coverage output from th
 
 Defines the `lint` task which will lint all source and test files.
 
-### linoleum/tasks/babel
-
-Defines the `babel` task which builds all source content to their ES5 equivalent.
-
-### linoleum/tasks/test
-
-Defines the `test:mocha` task which runs in-process Node tests. This is not recommended for Webpack projects. Instead the cover tests below are preferred.
-
 ### linoleum/tasks/cover
 
 Defines:
-- `cover:mocha` task which runs in-process Node coverage tests. This is not intended for webpack projects.
 - `cover:untested` task which runs empty coverage report to ensure that untested files are included in `cover:report`.
 - `cover:report` task which combines raw data from the other coverage tasks and asserts coverage.
 
