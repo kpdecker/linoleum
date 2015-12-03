@@ -4,38 +4,19 @@ import {PluginError} from 'gulp-util';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 
-import {Instrumenter, utils} from 'istanbul';
-import {transform} from 'babel-core';
-
+import {instrumenterConfig} from '../src/cover';
 import plumber from '../src/plumber';
 import {runTask} from '../src/watch';
 
 import {SOURCE_FILES, COVERAGE_TARGET, WATCHING, testFiles} from '../index';
-import BABEL_DEFAULTS from '../babel-defaults';
 
-import {Collector, Report} from 'istanbul';
+import {utils, Collector, Report} from 'istanbul';
 import through from 'through2';
 
 function coverSourceFiles() {
   return Gulp.src(SOURCE_FILES)
       .pipe(plumber())
-      .pipe(istanbul({
-        instrumenter(opts) {
-          // Hack around our own instrumenter so we can execute against inline paths but still instrument
-          // the transpiled code. This is necessary as ignore statements don't work in isparta right now
-          // and development has stalled by a potential istanbul merge. Fun.
-          let ret = new Instrumenter(opts);
-          let $instrumentSync = ret.instrumentSync;
-          ret.instrumentSync = function(code, filename) {
-            code = transform(code, Object.assign({filename}, BABEL_DEFAULTS));
-            return $instrumentSync.call(this, code.code, filename);
-          };
-          return ret;
-        },
-        embedSource: true,
-        includeUntested: true,
-        sourceMap: true
-      }));
+      .pipe(istanbul(instrumenterConfig()));
 }
 
 // This task hierarchy is to hack around
