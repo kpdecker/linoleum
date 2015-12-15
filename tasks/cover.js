@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import Gulp from 'gulp';
-import GUtil, {PluginError} from 'gulp-util';
+import GUtil, {PluginError, colors} from 'gulp-util';
 import istanbul from 'gulp-istanbul';
+
+import {SourceMapConsumer} from 'source-map';
 
 import {instrumenterConfig} from '../src/cover';
 import plumber from '../src/plumber';
@@ -74,32 +76,48 @@ Gulp.task('cover:report', function() {
       if (!WATCHING) {
         let errors = _.compact(_.map(collector.getFinalCoverage(), (file, path) => {
           let summary = utils.summarizeFileCoverage(file),
+              sourceMap = extractSourceMap(file.code),
               errors = [];
 
+          function mapLine(line, column = 1) {
+            if (sourceMap) {
+              line = sourceMap.originalPositionFor({line, column}).line || line;
+            }
+            return parseInt(line, 10);
+          }
+          function formatLines(lines) {
+            return lines.sort((a, b) => a - b)
+                .map((line) => colors.magenta(line))
+                .join(', ');
+          }
+
           if (summary.lines.pct < 100) {
-            let lines = _.compact(_.map(summary.linesCovered, (value, key) => value ? undefined : key));
+            let lines = _.compact(_.map(summary.linesCovered, (value, key) => value ? undefined : mapLine(parseInt(key, 10))));
             if (lines.length) {
-              errors.push(`lines: ${lines.join(', ')}`);
+              errors.push(`lines: ${formatLines(lines)}`);
             }
           }
           if (summary.statements.pct < 100) {
             let statements = _.compact(_.map(file.s, (coverage, id) => {
               if (!coverage && !file.statementMap[id].skip) {
-                return file.statementMap[id].start.line;
+                let {line, column} = file.statementMap[id].start;
+                return mapLine(line, column);
               }
             }));
             if (statements.length) {
-              errors.push(`statements: line #${statements.join(', ')}`);
+              console.log(JSON.stringify(statements));
+              errors.push(`statements: line #${formatLines(statements)}`);
             }
           }
           if (summary.functions.pct < 100) {
             let functions = _.compact(_.map(file.f, (coverage, id) => {
               if (!coverage && !file.fnMap[id].skip) {
-                return file.fnMap[id].line;
+                let {line, column} = file.fnMap[id].loc.start;
+                return mapLine(line, column);
               }
             }));
             if (functions.length) {
-              errors.push(`functions: line #${functions.join(', ')}`);
+              errors.push(`functions: line #${formatLines(functions)}`);
             }
           }
           if (summary.branches.pct < 100) {
@@ -107,21 +125,22 @@ Gulp.task('cover:report', function() {
               let branch = file.branchMap[id];
               coverage = _.map(coverage, (coverage, location) => !coverage && !branch.locations[location].skip);
               if (_.includes(coverage, true)) {
-                return file.branchMap[id].line;
+                let {line, column} = file.branchMap[id].locations[0].start;
+                return mapLine(line, column);
               }
             }));
             if (branches.length) {
-              errors.push(`branches: line #${branches.join(', ')}`);
+              errors.push(`branches: line #${formatLines(branches)}`);
             }
           }
 
           if (errors.length > 0) {
-            return `${path}\n    ${errors.join('\n    ')}`;
+            return `${colors.cyan(path)}\n    ${errors.join('\n    ')}`;
           }
         }));
 
         if (errors.length) {
-          errors = `Coverage failed (line numbers are post-transpiler):\n${errors.join('\n')}`;
+          errors = `Coverage failed:\n${errors.join('\n')}`;
         }
         if (errors && COMPLETE_COVERAGE) {
           this.emit('error', new PluginError({
@@ -140,3 +159,13 @@ Gulp.task('watch:cover:report', function() {
     runTask('cover:report');
   });
 });
+
+function extractSourceMap(code) {
+  let mappingLine = code.reduceRight((prev, current) => {
+    return prev || /sourceMappingURL=data:.*base64,(.*)/.exec(current);
+  }, undefined);
+  if (mappingLine) {
+    let decoded = JSON.parse(new Buffer(mappingLine[1], 'base64').toString());
+    return new SourceMapConsumer(decoded);
+  }
+}

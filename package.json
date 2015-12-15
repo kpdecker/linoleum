@@ -37,6 +37,7 @@
     "lodash": "^3.10.1",
     "mocha": "^2.3.3",
     "sinon-chai": "^2.8.0",
+    "source-map": "^0.5.3",
     "source-map-support": "kpdecker/node-source-map-support",
     "through2": "^2.0.0"
   },
