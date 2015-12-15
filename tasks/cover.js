@@ -105,7 +105,6 @@ Gulp.task('cover:report', function() {
               }
             }));
             if (statements.length) {
-              console.log(JSON.stringify(statements));
               errors.push(`statements: line #${formatLines(statements)}`);
             }
           }
