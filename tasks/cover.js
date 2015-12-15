@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import Gulp from 'gulp';
-import {PluginError} from 'gulp-util';
+import GUtil, {PluginError} from 'gulp-util';
 import istanbul from 'gulp-istanbul';
 
 import {instrumenterConfig} from '../src/cover';
 import plumber from '../src/plumber';
 import {runTask} from '../src/watch';
 
-import {SOURCE_FILES, COVERAGE_TARGET, WATCHING} from '../index';
+import {SOURCE_FILES, COVERAGE_TARGET, WATCHING, COMPLETE_COVERAGE} from '../index';
 
 import {utils, Collector, Report} from 'istanbul';
 import through from 'through2';
@@ -121,10 +121,15 @@ Gulp.task('cover:report', function() {
         }));
 
         if (errors.length) {
+          errors = `Coverage failed (line numbers are post-transpiler):\n${errors.join('\n')}`;
+        }
+        if (errors && COMPLETE_COVERAGE) {
           this.emit('error', new PluginError({
             plugin: 'coverage',
-            message: `Coverage failed (line numbers are post-transpiler):\n${errors.join('\n')}`
+            message: errors
           }));
+        } else if (errors) {
+          GUtil.log('[cover:report]', errors);
         }
       }
     });
