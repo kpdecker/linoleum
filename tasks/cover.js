@@ -141,12 +141,12 @@ Gulp.task('cover:report', function() {
         if (errors.length) {
           errors = `Coverage failed:\n${errors.join('\n')}`;
         }
-        if (errors && COMPLETE_COVERAGE) {
+        if (errors.length && COMPLETE_COVERAGE) {
           this.emit('error', new PluginError({
             plugin: 'coverage',
             message: errors
           }));
-        } else if (errors) {
+        } else if (errors.length) {
           GUtil.log('[cover:report]', errors);
         }
       }
