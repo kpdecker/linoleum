@@ -1,5 +1,5 @@
 {
-  "name": "linoleum",
+  "name": "@kpdecker/linoleum",
   "version": "0.0.0",
   "description": "Shared javascript build and testing infrastructure",
   "main": "index.js",
@@ -16,7 +16,6 @@
     "url": "https://github.com/kpdecker/linoleum/issues"
   },
   "homepage": "https://github.com/kpdecker/linoleum#readme",
-  "private": true,
   "dependencies": {
     "babel": "^6.0.15",
     "babel-core": "^6.1.2",
