@@ -30,6 +30,7 @@ export function runTask(command, done) {
     Gulp.removeListener('task_stop', run);
     Gulp.removeListener('task_err', cleanup);
     if (done) {
+      /* istanbul ignore next : Difficult to test within gulp runner as it errors the test. Should provide better mock environment later */
       done(err && err.err ? new PluginError('runTask', `Dependent task, ${waitingFor}, failed`) : undefined);
     }
   }

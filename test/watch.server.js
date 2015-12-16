@@ -111,7 +111,7 @@ describe('watch', function() {
         done();
       });
     });
-    it('not fail with out callback', function(done) {
+    it('not fail without callback', function(done) {
       let a;
       Gulp.task('a', function() {
         a = true;
