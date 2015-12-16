@@ -16,12 +16,12 @@ Within `Gulpfile.js`:
 
 ```
 // Init global state
-var Linoleum = require('linoleum');
+var Linoleum = require('@kpdecker/linoleum');
 
 // Include optional linoleum tasks
-require('linoleum-node');
-require('linoleum-webpack');
-require('linoleum-electron');
+require('@kpdecker/linoleum-node');
+require('@kpdecker/linoleum-webpack');
+require('@kpdecker/linoleum-electron');
 ```
 
 Global APIs:
