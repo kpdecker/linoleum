@@ -1,4 +1,5 @@
 import Gulp from 'gulp';
+import {PluginError} from 'gulp-util';
 
 import * as Config from '../config';
 
@@ -25,11 +26,11 @@ export function runTask(command, done) {
       cleanup();
     }
   }
-  function cleanup() {
+  function cleanup(err) {
     Gulp.removeListener('task_stop', run);
     Gulp.removeListener('task_err', cleanup);
     if (done) {
-      done();
+      done(err && err.err ? new PluginError('runTask', `Dependent task, ${waitingFor}, failed`) : undefined);
     }
   }
   Gulp.on('task_stop', run);
