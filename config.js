@@ -12,11 +12,6 @@ module.exports.COMPLETE_COVERAGE = true;
 // Hack around es6 module definitions without bootstrapping the transpiler
 module.exports.__esModule = true;
 
-require('./runtime-init');
-
-module.exports.watch = require('./src/watch').default;
-module.exports.runTask = require('./src/watch').runTask;
-
 module.exports.jsFiles = function() {
   return module.exports.SOURCE_FILES.concat(
       module.exports.TEST_FILES);
