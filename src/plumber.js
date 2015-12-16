@@ -1,6 +1,6 @@
 import GUtil from 'gulp-util';
 import plumber from 'gulp-plumber';
-import {WATCHING} from '../index';
+import {WATCHING} from '../config';
 
 export default function(done) {
   return plumber({

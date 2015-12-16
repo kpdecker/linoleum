@@ -1,6 +1,6 @@
 import Gulp from 'gulp';
 
-import * as Index from '../index';
+import * as Config from '../config';
 
 // A total hack, but this is basiclly what run sequence does without
 // the potentially hazardous error handling logic.
@@ -42,7 +42,7 @@ export default function(files, command, options = {}) {
     let running = false,
         rerun = false;
 
-    Index.WATCHING = true;    // Enable plumber
+    Config.WATCHING = true;    // Enable plumber
     Gulp.watch(files, function watcher() {
       if (running) {
         rerun = true;
