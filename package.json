@@ -1,6 +1,6 @@
 {
   "name": "@kpdecker/linoleum",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Shared javascript build and testing infrastructure",
   "main": "index.js",
   "scripts": {
