@@ -48,7 +48,7 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "gulp": "^3.9.0",
-    "linoleum-node": "kpdecker/linoleum-node",
+    "@kpdecker/linoleum-node": "^1.0.0",
     "sinon": "^1.17.0"
   },
   "eslintConfig": {

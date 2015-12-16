@@ -2,7 +2,7 @@ var Gulp = require('gulp'),
 
     Linoleum = require('./index');
 
-require('linoleum-node');
+require('@kpdecker/linoleum-node');
 
 Gulp.task('build', ['clean', 'lint'], function(done) {
   Linoleum.runTask('babel', done);
