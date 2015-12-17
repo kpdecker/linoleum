@@ -81,7 +81,7 @@ Gulp.task('cover:report', function() {
 
           function mapLine(line, column = 0) {
             if (sourceMap) {
-              line = sourceMap.originalPositionFor({line, column, bias: SourceMapConsumer.LEAST_UPPER_BOUND}).line || line;
+              line = sourceMap.originalPositionFor({line, column, bias: SourceMapConsumer.LEAST_UPPER_BOUND}).line || `generated: ${line}`;
             }
             return parseInt(line, 10);
           }
