@@ -79,9 +79,9 @@ Gulp.task('cover:report', function() {
               sourceMap = extractSourceMap(file.code),
               errors = [];
 
-          function mapLine(line, column = 1) {
+          function mapLine(line, column = 0) {
             if (sourceMap) {
-              line = sourceMap.originalPositionFor({line, column}).line || line;
+              line = sourceMap.originalPositionFor({line, column, bias: SourceMapConsumer.LEAST_UPPER_BOUND}).line || line;
             }
             return parseInt(line, 10);
           }
