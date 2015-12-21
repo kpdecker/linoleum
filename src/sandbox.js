@@ -22,7 +22,11 @@ afterEach(function() {
 /* istanbul ignore next */
 if (typeof process !== 'undefined') {
   function unhandledRejection(err) {
-    throw err;
+    if (!err) {
+      throw new Error('Rejection without value passed');
+    } else {
+      throw err;
+    }
   }
   beforeEach(function() {
     process.on('unhandledRejection', unhandledRejection);
