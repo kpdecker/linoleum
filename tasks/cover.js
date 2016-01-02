@@ -39,14 +39,12 @@ Gulp.task('cover:report', function() {
       try {
         collector.add(JSON.parse(file.contents.toString()));
       } catch (err) {
-        if (WATCHING) {
-          // We can get into an out of sync state where only one set of coverage
-          // files are updated and the state doesn't match up, cauing istanbul to
-          // blow up. We are ignoring this case and assuming that once the other
-          // coverage process completes we will return to a consistent state in
-          // the report.
-          return;
-        } else {
+        // We can get into an out of sync state where only one set of coverage
+        // files are updated and the state doesn't match up, cauing istanbul to
+        // blow up. We are ignoring this case and assuming that once the other
+        // coverage process completes we will return to a consistent state in
+        // the report.
+        if (!WATCHING) {
           throw err;
         }
       }
