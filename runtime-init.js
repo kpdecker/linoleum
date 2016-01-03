@@ -1,4 +1,11 @@
+/* eslint-disable no-process-env */
+var Path = require('path');
+
 Error.stackTraceLimit = Infinity;   // And beyond
+
+if (!process.env.BABEL_CACHE_PATH) {
+  process.env.BABEL_CACHE_PATH = Path.resolve('./.babel.cache.json');
+}
 
 require('babel-core/register')(require('./babel-defaults'));
 
