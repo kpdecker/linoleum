@@ -45,7 +45,11 @@ export default function(files, command, options = {}) {
         rerun = false;
 
     Config.WATCHING = true;    // Enable plumber
-    Gulp.watch(files, function watcher() {
+    Gulp.watch(files, function watcher(event) {
+      if (options.onChange) {
+        options.onChange(event);
+      }
+
       if (running) {
         rerun = true;
         return;
