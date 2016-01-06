@@ -45,13 +45,15 @@ describe('watch', function() {
       expect(Index.WATCHING).to.equal(true);
 
       if (counter++ >= 1) {
-        expect(onChange).to.have.been.calledOnce;
+        expect(onChange)
+            .to.have.been.calledOnce
+            .to.have.been.calledWith(['foo']);
         done();
       }
     });
     this.stub(Gulp, 'watch', function(glob, callback) {
       expect(glob).to.equal('*.js');
-      callback();
+      callback('foo');
     });
     watch('*.js', 'doit', {onChange});
     Gulp.start('watch:doit');

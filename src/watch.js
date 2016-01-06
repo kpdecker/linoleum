@@ -42,17 +42,23 @@ export function runTask(command, done) {
 export default function(files, command, options = {}) {
   Gulp.task(`watch:${command}`, function() {
     let running = false,
-        rerun = false;
+        rerun = false,
+        changed = [];
 
     Config.WATCHING = true;    // Enable plumber
     Gulp.watch(files, function watcher(event) {
       if (options.onChange) {
-        options.onChange(event);
+        changed.push(event);
       }
 
       if (running) {
         rerun = true;
         return;
+      }
+
+      if (options.onChange) {
+        options.onChange(changed);
+        changed = [];
       }
 
       running = true;
