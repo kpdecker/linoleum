@@ -41,6 +41,10 @@ Global APIs:
 
   Will create `watch:cover` task.
 
+  Accepts an option 3rd argument `options`, which may define:
+  - `setup`: Task that is called once prior to the first exec of the watched task.
+  - `onChange`: Called prior to exec with an array of the changes that occurred to trigger this cycle.
+
 ### linoleum/tasks/clean
 
 Defines the `clean` task which will remove all build and coverage output from the project.
