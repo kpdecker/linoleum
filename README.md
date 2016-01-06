@@ -47,7 +47,7 @@ Global APIs:
 
 ### linoleum/tasks/clean
 
-Defines the `clean` task which will remove all build and coverage output from the project.
+Defines the `clean` and `clean:always` task which will remove all build and coverage output from the project. The `clean` task will only run once in watch mode, while the `clean:always` task will run on each invocation.
 
 ### linoleum/tasks/lint
 
