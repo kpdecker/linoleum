@@ -50,10 +50,9 @@ export default function(files, command, options = {}) {
 
     Config.WATCHING = true;    // Enable plumber
     Gulp.watch(files, function watcher(event) {
-      if (!event) {
-        console.error('Unexpected event object in watch', event, new Error().stack);
+      if (event) {
+        changed.push(event);
       }
-      changed.push(event);
 
       if (running) {
         rerun = true;
