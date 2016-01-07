@@ -1,7 +1,10 @@
 import Gulp from 'gulp';
 import {PluginError} from 'gulp-util';
+import {EventEmitter} from 'events';
 
 import * as Config from '../config';
+
+export let changeMonitors = new EventEmitter();
 
 // A total hack, but this is basiclly what run sequence does without
 // the potentially hazardous error handling logic.
@@ -47,9 +50,7 @@ export default function(files, command, options = {}) {
 
     Config.WATCHING = true;    // Enable plumber
     Gulp.watch(files, function watcher(event) {
-      if (options.onChange) {
-        changed.push(event);
-      }
+      changed.push(event);
 
       if (running) {
         rerun = true;
@@ -58,8 +59,9 @@ export default function(files, command, options = {}) {
 
       if (options.onChange) {
         options.onChange(changed);
-        changed = [];
       }
+      changeMonitors.emit('change', changed);
+      changed = [];
 
       running = true;
       setTimeout(function() {
