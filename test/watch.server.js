@@ -32,7 +32,7 @@ describe('watch', function() {
     });
     this.stub(Gulp, 'watch', function(glob, callback) {
       expect(glob).to.equal('*.js');
-      callback();
+      callback('foo');
     });
     watch('*.js', 'doit');
     Gulp.start('watch:doit');
@@ -74,7 +74,7 @@ describe('watch', function() {
     });
     this.stub(Gulp, 'watch', function(glob, callback) {
       expect(glob).to.equal('*.js');
-      callback();
+      callback('foo');
     });
     watch('*.js', 'doit', {setup: 'setup'});
     Gulp.start('watch:doit');
@@ -89,13 +89,13 @@ describe('watch', function() {
       if (counter++ >= 2) {
         done();
       } else {
-        callback();
+        callback('bar');
       }
     });
     this.stub(Gulp, 'watch', function(glob, _callback) {
       callback = _callback;
       expect(glob).to.equal('*.js');
-      callback();
+      callback('foo');
     });
     watch('*.js', 'doit');
     Gulp.start('watch:doit');
