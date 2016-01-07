@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kpdecker/linoleum#readme",
   "dependencies": {
+    "@kpdecker/eslint-config-linoleum": "^4.0.0",
     "babel": "^6.0.15",
     "babel-core": "^6.1.2",
     "babel-eslint": "^4.1.3",
@@ -25,9 +26,9 @@
     "babel-preset-stage-0": "^6.1.2",
     "chai-string": "^1.1.2",
     "del": "^2.0.2",
-    "@kpdecker/eslint-config-linoleum": "^4.0.0",
     "eslint-plugin-react": "^3.4.2",
     "gulp-babel": "^6.1.0",
+    "gulp-changed": "^1.3.0",
     "gulp-eslint": "^1.0.0",
     "gulp-istanbul": "^0.10.0",
     "gulp-plumber": "^1.0.1",
