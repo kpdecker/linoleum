@@ -12,7 +12,13 @@ export function instrumenterConfig() {
       let ret = new Instrumenter(opts);
       let $instrumentSync = ret.instrumentSync;
       ret.instrumentSync = function(code, filename) {
-        code = transform(code, Object.assign({filename}, BABEL_DEFAULTS));
+        let babelOptions = {
+          auxiliaryCommentBefore: 'istanbul ignore start',
+          auxiliaryCommentAfter: 'istanbul ignore end',
+          ... BABEL_DEFAULTS
+        };
+
+        code = transform(code, Object.assign({filename}, babelOptions));
         return $instrumentSync.call(this, code.code, filename);
       };
       return ret;
