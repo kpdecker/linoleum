@@ -9,6 +9,8 @@ module.exports.COVERAGE_TARGET = './coverage';
 
 module.exports.COMPLETE_COVERAGE = true;
 
+module.exports.MOCHA_TIMEOUT = 2000;
+
 // Hack around es6 module definitions without bootstrapping the transpiler
 module.exports.__esModule = true;
 
